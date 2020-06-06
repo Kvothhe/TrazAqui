@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.Scanner;
 
 public class TrazAqui
 {
@@ -82,7 +83,7 @@ public class TrazAqui
     }
     
     public void adicionaUti(Utilizador u) throws ExisteUtilizadorException{
-        if(!this.utilizadores.containsKey(u.getCodigo()))
+        if(this.utilizadores.containsKey(u.getCodigo()))
             throw new ExisteUtilizadorException(u.getCodigo());
         else this.utilizadores.put(u.getCodigo(),u.clone());    
     }
@@ -100,13 +101,17 @@ public class TrazAqui
     }
     
     public static void main(String args[]){
+        TrazAqui app = new TrazAqui();
         Utilizador u1 = new Utilizador("u48","Francisco",new Location(-97.28862,59.067047));
         Location tl = new Location(-97.84033,59.35376);
         
         EmpresaV TORRESTIR = new EmpresaV("t43","TORRESTIR - TRANSPORTES NACIONAIS E INTERNACIONAIS",tl,189.0,"212420781",0.5);
         TORRESTIR.setVelocidademed(20.0);
         
-        System.out.println(tl.distanceTo(new Location(-97.28862,59.067047)));
+        Menu menu = new Menu();
+        menu.initMenu();
+
+        //System.out.println(tl.distanceTo(new Location(-97.28862,59.067047)));
     }
     /*
     public TrazAqui clone(){
