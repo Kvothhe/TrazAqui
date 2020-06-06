@@ -1,0 +1,25 @@
+#BlueJ class context
+comment0.target=Empresa1
+comment1.params=
+comment1.target=Empresa1()
+comment10.params=
+comment10.target=java.lang.String\ toString()
+comment11.params=
+comment11.target=Empresa1\ clone()
+comment2.params=cod\ n\ l\ r\ ni\ txak
+comment2.target=Empresa1(java.lang.String,\ java.lang.String,\ Location,\ double,\ java.lang.String,\ double)
+comment3.params=emp
+comment3.target=Empresa1(Empresa1)
+comment4.params=
+comment4.target=java.lang.String\ getNif()
+comment5.params=
+comment5.target=Encomenda\ getEncomenda()
+comment6.params=
+comment6.target=double\ getTaxakm()
+comment7.params=d
+comment7.target=double\ setCusto(double)
+comment8.params=df\ dc
+comment8.target=double\ getTotaldistancia(Location,\ Location)
+comment9.params=o
+comment9.target=boolean\ equals(java.lang.Object)
+numComments=12

@@ -1,0 +1,5 @@
+#BlueJ class context
+comment0.target=ExisteUtilizadorException
+comment1.params=cod
+comment1.target=ExisteUtilizadorException(java.lang.String)
+numComments=2

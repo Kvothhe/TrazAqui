@@ -1,0 +1,5 @@
+#BlueJ class context
+comment0.target=ExisteLojaException
+comment1.params=cod
+comment1.target=ExisteLojaException(java.lang.String)
+numComments=2

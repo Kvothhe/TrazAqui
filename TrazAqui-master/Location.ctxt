@@ -1,0 +1,19 @@
+#BlueJ class context
+comment0.target=Location
+comment1.params=
+comment1.target=Location()
+comment2.params=latitude\ longitude
+comment2.target=Location(double,\ double)
+comment3.params=l
+comment3.target=Location(Location)
+comment4.params=
+comment4.target=double\ getLongitude()
+comment5.params=
+comment5.target=double\ getLatitude()
+comment6.params=that
+comment6.target=double\ distanceTo(Location)
+comment7.params=
+comment7.target=java.lang.String\ toString()
+comment8.params=
+comment8.target=Location\ clone()
+numComments=9
