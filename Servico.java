@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.time.Duration;
 
-public abstract class Servico
+public abstract class Servico extends Account
 {
     private String codigo;
     private String nome;
@@ -14,7 +14,6 @@ public abstract class Servico
     private boolean disponibilidade;
     private boolean medicamentos;
     private Location localizacao;
-    private List<Encomenda> registo;
     
     public Servico(){
         this.nome = "";
@@ -25,10 +24,9 @@ public abstract class Servico
         this.velocidademed = 0.0;
         this.medicamentos = false;
         this.localizacao = new Location(0.0,0.0);
-        this.registo = new ArrayList<>();
     }
     
-    public Servico(String cod,String n,Location l,double r){
+    public Servico(String cod,String n,Location l,double r){      
         this.codigo = cod;
         this.nome = n;
         this.classificacao = 0;
@@ -38,9 +36,7 @@ public abstract class Servico
         this.medicamentos = false;
         this.localizacao = l;
         this.uti = 0;
-        this.registo = new ArrayList <>();
     }
-    
     
     public Servico(Servico s){
         this.codigo = s.getCodigo();
@@ -51,7 +47,6 @@ public abstract class Servico
         this.disponibilidade = s.getDisponibilidade();
         this.medicamentos = s.getMedicamentos();
         this.localizacao = s.getLocalizacao();
-        this.registo = s.getRegisto();
     }
     
     public void setVelocidademed(double l){
@@ -105,19 +100,10 @@ public abstract class Servico
     public Location getLocalizacao(){
         return this.localizacao;
     }
-        
-    public List<Encomenda> getRegisto(){
-        return registo.stream().map(Encomenda::clone).collect(Collectors.toList());
-    }
     
     public void addClassificacao(int i){
         double sum = this.classificacao + ((i - this.classificacao)/uti);
         setClassificacao(sum);
-    }
-    
-    public void setRegisto(List<Encomenda> p){
-        this.registo = new ArrayList<>();
-        p.forEach(s -> {this.registo.add(s.clone());});
     }
     
     public abstract Servico clone();
@@ -134,7 +120,7 @@ public abstract class Servico
         this.disponibilidade == s.getDisponibilidade() && 
         this.medicamentos == s.getMedicamentos() &&
         this.localizacao.equals(s.getLocalizacao()) && 
-        this.registo.equals(s.getRegisto()) && this.uti == s.getUtilizador();
+        this.uti == s.getUtilizador();
     }
     
     public String toString(){

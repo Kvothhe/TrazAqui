@@ -102,7 +102,7 @@ public class TrazAqui
     
     public static void main(String args[]){
         TrazAqui app = new TrazAqui();
-        Utilizador u1 = new Utilizador("u48","Francisco",new Location(-97.28862,59.067047));
+        //Utilizador u1 = new Utilizador("u48","Francisco",new Location(-97.28862,59.067047));
         Location tl = new Location(-97.84033,59.35376);
         
         EmpresaV TORRESTIR = new EmpresaV("t43","TORRESTIR - TRANSPORTES NACIONAIS E INTERNACIONAIS",tl,189.0,"212420781",0.5);

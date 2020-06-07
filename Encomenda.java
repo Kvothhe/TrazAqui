@@ -1,6 +1,7 @@
 import java.util.List;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
+import java.time.LocalDate;
 
 public class Encomenda
 {
@@ -11,6 +12,8 @@ public class Encomenda
     private boolean med;
     private double classificacao;
     private double preco;
+    private LocalDate dataentrega;
+    private LocalDate databusca;
     private List<LinhaEncomenda> produtos;
     
     public Encomenda(){
@@ -21,14 +24,19 @@ public class Encomenda
         this.med = false;
         this.preco = 0;
         this.produtos = new ArrayList<LinhaEncomenda>();
+        this.dataentrega = LocalDate.now();
+        this.databusca = LocalDate.now();
     }
     
-    public Encomenda(String r,String f,String c,double p,List<LinhaEncomenda> l){
+    public Encomenda(String r,String f,String c,double p,
+                        LocalDate n,LocalDate o,List<LinhaEncomenda> l){
         this.referencia = r;
         this.fornecedor = f;
         this.cliente = c;
         this.peso = p;
         this.med = false;
+        this.dataentrega = n;
+        this.databusca = o;
         setProdutos(l);
     }
     
@@ -38,6 +46,7 @@ public class Encomenda
         this.cliente = e.getCliente();
         this.peso = e.getPeso();
         this.produtos = e.getProdutos();
+        this.dataentrega = e.getDataentrega();
     }
     
     public boolean equals(Object obj){
@@ -49,14 +58,18 @@ public class Encomenda
                this.peso == e.getPeso() && this.med == e.getMed() && 
                this.produtos.equals(e.getProdutos()) && 
                this.classificacao == e.getClassificacao() &&
-               this.referencia.equals(e.getReferencia());
+               this.referencia.equals(e.getReferencia()) &&
+               this.dataentrega.equals(e.getDataentrega());
     }
     
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append(this.referencia + "\n" + this.fornecedor + "\n" + this.cliente + "\n" + this.peso 
-                        + "\n" + this.med + "\n" + this.produtos.toString() + 
-                        this.classificacao);
+        sb.append(this.referencia + "\n" + this.fornecedor + "\n" + 
+                        this.cliente + "\n" + this.peso 
+                        + "\n" + this.med + "\n" + 
+                        this.produtos.toString() + 
+                        this.classificacao + "\n" + this.dataentrega
+                        + "\n" + this.databusca);
         return sb.toString();                
     }
     
@@ -82,6 +95,22 @@ public class Encomenda
     
     public boolean getMed(){
         return this.med;
+    }
+    
+    public LocalDate getDataentrega(){
+        return this.dataentrega;
+    }
+    
+    public LocalDate getDatabusca(){
+        return this.databusca;
+    }
+    
+    public void setDataentrega(LocalDate t){
+        this.dataentrega = t;
+    }
+    
+    public void setDatabusca(LocalDate p){
+        this.databusca = p;
     }
     
     public void setProdutos(List<LinhaEncomenda> p){

@@ -3,11 +3,11 @@ import java.util.Map;
 
 public class Menu
 {
-	public void initMenu()
-	{
-		TrazAqui app = new TrazAqui();
+    public void initMenu()
+    {
+        TrazAqui app = new TrazAqui();
 
-		Scanner input = new Scanner(System.in);
+        Scanner input = new Scanner(System.in);
         int menu = 0;
         while(true)
         {
@@ -21,7 +21,7 @@ public class Menu
 
             if(menu == 1)
             {
-            	//Codigo automatico
+                //Codigo automatico
                 System.out.println("Código Utilizador: ");
                 String cod = input.nextLine();
 
@@ -34,23 +34,23 @@ public class Menu
                 System.out.println("Longitude Utilizador: ");
                 double longi = input.nextDouble();
                 Location local = new Location(lat,longi);
-
+                
                 Utilizador util = new Utilizador(cod, nome, local);
                 try
                 {
-                	app.adicionaUti(util);
-            	}
-            	catch(Exception e){
-            		System.out.println(e);
-            	};
+                    app.adicionaUti(util);
+                }
+                catch(Exception e){
+                    System.out.println(e);
+                };
             }
             if(menu == 2)
             {
-            	for(Map.Entry<String,Utilizador> entry : app.getUtilizadoresC().entrySet())
-            		System.out.println(entry.getKey());
+                for(Map.Entry<String,Utilizador> entry : app.getUtilizadoresC().entrySet())
+                    System.out.println(entry.getKey());
             }
             if(menu == 4)
-            	break;
+                break;
         }
-	}
+    }
 }

@@ -1,24 +1,29 @@
 import java.util.Map;
+import java.util.List;
 
-public class Utilizador
+public class Utilizador extends Account
 {
     private String CodUtilizador;
     private String Nome;
     private Location GPS;
     
     public Utilizador(){
+        super();
         this.CodUtilizador = "";
         this.Nome = "";
         this.GPS = new Location();
     }
     
-    public Utilizador(String cod, String n, Location l){
+    public Utilizador(String em,String pass,List<Encomenda> en,String cod
+    , String n, Location l){
+        super(em,pass,en);
         this.CodUtilizador = cod;
         this.Nome = n;
         this.GPS = l;
     }
     
     public Utilizador(Utilizador a){
+        super(a);
         this.CodUtilizador = a.getCodigo();
         this.Nome = a.getNome();
         this.GPS = a.getLocation();

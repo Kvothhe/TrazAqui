@@ -23,7 +23,7 @@ public class Empresa1 extends Servico
     public Empresa1(Empresa1 emp){
         super(emp);
         this.nif = emp.getNif();
-        this.enc = emp.getEncomenda();
+        this.enc = emp.getEncomendav();
         this.taxakm = emp.getTaxakm();
     }
     
@@ -31,7 +31,7 @@ public class Empresa1 extends Servico
         return this.nif;
     }
     
-    public Encomenda getEncomenda(){
+    public Encomenda getEncomendav(){
         return this.enc.clone();
     }
     

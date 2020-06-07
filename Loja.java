@@ -6,25 +6,26 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
-public class Loja
+public class Loja extends Account
 {
     private String NomeLoja;
     private String CodLoja;
     private Location GPS;
     private boolean sinal;
     private Map<String,Encomenda> encomendas;
-    private Map<String,Encomenda> registo;
     
     public Loja(){
+        super();
         this.NomeLoja = "";
         this.CodLoja = "";
         this.GPS = new Location(0.0,0.0);
         this.sinal = false;
         this.encomendas = new HashMap<>();
-        this.registo = new HashMap<>();
     }
     
-    public Loja(String n,String c,Location loc){
+    public Loja(String em,String pa,List<Encomenda> re,
+                String n,String c,Location loc){
+        super(em,pa,re);
         this.NomeLoja = n;
         this.CodLoja = c;
         this.GPS = loc;
@@ -33,6 +34,7 @@ public class Loja
     }
     
     public Loja(Loja l){
+        super(l);
         this.NomeLoja = l.getNome();
         this.CodLoja = l.getCodLoja();
         this.GPS = l.getLocalizacao();
@@ -79,14 +81,6 @@ public class Loja
     
     public void removeEncomenda(String nome){
         this.encomendas.remove(nome);
-    }
-    
-    public Set<String> todosOsClientes(){
-        return new TreeSet(this.registo.keySet());
-    }
-    
-    public int qtsClientes(){
-        return this.registo.size();
     }
     
     public String toString(){

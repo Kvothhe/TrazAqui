@@ -16,10 +16,10 @@ public class Voluntario extends Servico
     
     public Voluntario(Voluntario v){
         super(v);
-        this.enc = v.getEncomenda();
+        this.enc = v.getEncomendap();
     }
     
-    public Encomenda getEncomenda(){
+    public Encomenda getEncomendap(){
         return this.enc.clone();
     }
     
