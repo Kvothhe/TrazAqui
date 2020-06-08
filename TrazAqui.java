@@ -1,120 +1,178 @@
-import java.io.*;
-import java.nio.file.Files;
-import java.util.Map;
-import java.util.List;
-import java.util.HashMap;
-import java.util.*;
-import java.util.stream.Collectors;
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.TreeMap;
+import java.io.ObjectOutputStream;
+import java.io.ObjectInputStream;
+import java.io.FileOutputStream;
+import java.io.FileInputStream;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class TrazAqui
 {
-    Map<String,Utilizador> utilizadores;
-    Map<String,Loja> lojas;
-    Map<String,Servico> servicos;
+    private StateManager curState;
+    private Account curUser;
+    private Menu appMenu;
+    private static int count=0;
     
-    public TrazAqui(){
-        this.utilizadores = new HashMap<>();
-        this.lojas = new HashMap<>();
-        this.servicos = new HashMap<>();
-    }
-    
-    public TrazAqui(Map<String,Utilizador> ut,Map<String,Loja> lj,Map<String,Servico> sv){
-        setUtilizadores(ut);
-        setLojas(lj);
-        setServicos(sv);
-    }
-    
-    public TrazAqui(TrazAqui t){
-        setUtilizadores(t.getUtilizadoresC());
-        setLojas(t.getLojasC());
-        setServicos(t.getServicosC());
-    }
-    
-    public void setUtilizadores(Map<String,Utilizador> utils){
-        this.utilizadores = new HashMap<>();
-        utils.entrySet().forEach(e->this.utilizadores.put(e.getKey(),
-                    e.getValue().clone()));
-    }
-    
-    public void setLojas(Map<String,Loja> lojs){
-        this.lojas = new HashMap<>();
-        lojs.entrySet().forEach(e->this.lojas.put(e.getKey(),
-                    e.getValue().clone()));
-    }
-    
-    public void setServicos(Map<String,Servico> srvs){
-        this.servicos = new HashMap<>();
-        srvs.entrySet().forEach(e->this.servicos.put(e.getKey(),
-                    e.getValue().clone()));
-    }
-    
-    public Map<String,Utilizador> getUtilizadoresC(){
-        Map<String,Utilizador> res = new HashMap<>();
-        for(Map.Entry<String,Utilizador> e : this.utilizadores.entrySet())
-            res.put(e.getKey(),e.getValue().clone());
-        return res;    
-    }
-    
-    public Map<String,Loja> getLojasC(){
-        Map<String,Loja> res = new HashMap<>();
-        for(Map.Entry<String,Loja> e : this.lojas.entrySet())
-            res.put(e.getKey(),e.getValue().clone());
-        return res;    
-    }
-    
-    public Map<String,Servico> getServicosC(){
-        Map<String,Servico> res = new HashMap<>();
-        for(Map.Entry<String,Servico> e : this.servicos.entrySet())
-            res.put(e.getKey(),e.getValue().clone());
-        return res;    
-    }
-    
-    public String toString(){
-        StringBuilder s = new StringBuilder();
-        s.append("Utilizadores: ").append(this.utilizadores).append("\n").
-        append("Lojas: ").append(this.lojas).append("\n").append("Servicos :").
-        append(this.servicos);
-        return s.toString();
-    }
-    
-    public TrazAqui clone(){
-        return new TrazAqui(this);
-    }
-    
-    public void adicionaUti(Utilizador u) throws ExisteUtilizadorException{
-        if(this.utilizadores.containsKey(u.getCodigo()))
-            throw new ExisteUtilizadorException(u.getCodigo());
-        else this.utilizadores.put(u.getCodigo(),u.clone());    
-    }
-    
-    public void adicionaLoj(Loja l) throws ExisteLojaException{
-        if(!this.lojas.containsKey(l.getCodLoja()))
-            throw new ExisteLojaException(l.getCodLoja());
-        else this.lojas.put(l.getCodLoja(),l.clone());
-    }
-    
-    public void adicionaSer(Servico s) throws ExisteServicoException{
-        if(!this.servicos.containsKey(s.getCodigo()))
-            throw new ExisteServicoException(s.getCodigo());
-        else this.servicos.put(s.getCodigo(),s.clone());    
-    }
-    
-    public static void main(String args[]){
-        TrazAqui app = new TrazAqui();
-        //Utilizador u1 = new Utilizador("u48","Francisco",new Location(-97.28862,59.067047));
-        Location tl = new Location(-97.84033,59.35376);
+    public static void main(String[] args){
+        TrazAqui mApp = null;
+        boolean recover=false, success=false;
         
-        EmpresaV TORRESTIR = new EmpresaV("t43","TORRESTIR - TRANSPORTES NACIONAIS E INTERNACIONAIS",tl,189.0,"212420781",0.5);
-        TORRESTIR.setVelocidademed(20.0);
-        
-        Menu menu = new Menu();
-        menu.initMenu();
-
-        //System.out.println(tl.distanceTo(new Location(-97.28862,59.067047)));
+        try{
+            mApp = new TrazAqui();
+            Scanner input = new Scanner(System.in);
+            System.out.print("Recuperar um estado antigo?");
+            recover = input.nextBoolean();
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        if(recover){
+            try{
+                ObjectInputStream ois = new ObjectInputStream(new FileInputStream("Estado"));
+                mApp.curState = (StateManager)ois.readObject();
+                ois.close();
+            }catch(Exception e){
+        System.out.println("Não está carregado! (" + e.getMessage() + ")");
+         }   
+        } 
+    
+        //mApp.run(false);
     }
     /*
-    public TrazAqui clone(){
-        return new TrazAqui(this);
+    public void run(boolean loggedIn){
+        do{
+            if(!loggedIn) loggedIn = this.menuActions();
+            else{ 
+                if(this.curUser instanceof Client)
+                    loggedIn = this.userActions();
+                else loggedIn = this.driverActions();
+            }    
+        }while(this.appMenu.getOpt() != 0);
     }*/
+    
+    public void save(){
+       try{
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("Estado"));
+            oos.writeObject(this.curState);
+            oos.flush();
+            oos.close();
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    private TrazAqui() throws TooManyInstancesException{
+        if(count == 0){
+            String[] mOps = {"Login", "Registar", "Top 10 utilizadores", "Top 10 empresas"};
+            String[] uOps = {"Inserir Pedido", "Classificar Serviço", "Logout"};
+            String[] lOps = {"Inserir informação","Logout"};
+            String[] eOps = {"Total faturado","Logout"};
+            this.curState = new StateManager();
+            this.curUser = null;
+            this.appMenu = new Menu(uOps,lOps,eOps,mOps);
+        }else throw new TooManyInstancesException();
+    }
+    
+    public boolean menuActions(){  
+        Account aux;
+        boolean login=false;
+
+        this.appMenu.mMenu();
+        switch(this.appMenu.getOpt()){
+            case 1:
+                try{
+                    aux = login();
+                    login = true;
+                    this.curUser = aux;
+                    System.out.println("Log in aceite");
+                }catch(WrongPasswordException | UserNotFoundException e){
+                    System.out.println(e.getMessage());
+                }
+                break;
+            case 2:
+                try{
+                    aux = register();
+                    this.curState.addUser(aux);
+                }catch(DuplicateRegistrationException e){
+                    System.out.println("Utilizador com email "+e.getMessage()+" já existe");
+                }
+                break;
+            case 3:
+                System.out.println(top10Uti());
+                break;
+            case 4:
+                System.out.println(top5Drivers());
+                break;
+            case 0:
+                save();
+                System.out.println("Exiting...");
+                break;
+        }
+    }
+    
+    public Account register () throws DuplicateRegistrationException{
+        Scanner input = new Scanner(System.in);
+        Account ret=null;
+        String nome=null, email=null, password=null;
+        double aux=0.f;
+        boolean enter=false, type=false, success=false;
+        char c;
+        
+        while(!success){
+            try{
+                System.out.print("Nome: ");
+                nome = input.nextLine();
+                System.out.print("Email: ");
+                email = input.nextLine();
+                System.out.print("Password: ");
+                password = input.nextLine();
+                System.out.print("Are you a client(write false) or a driver(write true)? ");
+                type = input.nextBoolean();
+                success = true;
+            }catch(Exception e){
+		System.out.println("Input error ("+e.getMessage() + ") please try again");
+                input.nextLine();
+            }
+        }
+
+        if(this.curState.userExists(email)) throw new DuplicateRegistrationException(email);
+		
+	if(type){
+            success=false;
+            while(!success){ 
+                try{
+                    System.out.print("Appear as available?(Y/N) ");
+                    input.nextLine();
+                    c=input.nextLine().charAt(0);
+                    ret=new Driver(email,name,password,homeAdress,birthday,new ArrayList<Travel>(),c=='Y',0.d,0.d,0.d,this.getTaxiInfo());
+                    success=true;
+                }catch(Exception e){
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+	else ret = new Client(email,name,password,homeAdress,birthday,new ArrayList<Travel>(),new Point2D());
+    
+	return ret; 
+    }
+    
+    public String top10Uti(){
+        StringBuilder sb = new StringBuilder();
+        List<String> aux = this.curState.getUsers().values().stream()
+                               .filter(a->a.getClass().getSimpleName().equals("Utilizador"))
+                               .sorted(new UsarComparator())
+                               .limit(10)
+                               .map(a->a.getNome())
+                               .collect(Collectors.toList());
+        int i=1;
+        for(String st : aux){
+            sb.append(i).append("- ").append(st).append("\n");
+            i++;
+        }
+
+        return sb.toString();
+    }
 }

@@ -4,21 +4,24 @@ import java.util.stream.Collectors;
 import java.time.LocalDate;
 import java.io.Serializable;
 
-public class Account implements Serializable{
+public class Account implements Comparable<Account>,Serializable{
 
     private String email;
     private String password;
+    private String name;
     private List<Encomenda> registo;
 
     public Account(){
 	   this.email = null;
 	   this.password = null;
+	   this.name = null;
 	   this.registo = new ArrayList<>();
     }
 
-    public Account( String email, String password,List<Encomenda> tvl){
+    public Account(String n,String email, String password,List<Encomenda> tvl){
         this.email = email;
         this.password = password;
+        this.name = n;
         this.registo = tvl.stream().map(Encomenda::clone).
                         collect(Collectors.toCollection(ArrayList::new));
     }
@@ -26,7 +29,16 @@ public class Account implements Serializable{
     public Account (Account a){
         this.email = a.getEmail();
         this.password = a.getPassword();
+        this.name = a.getNome();
 	this.registo = a.getEncomenda();
+    }
+    
+    public void setNome(String n){
+        this.name = n;
+    }
+    
+    public String getNome(){
+        return this.name;
     }
 
     public String getEmail(){
@@ -73,14 +85,11 @@ public class Account implements Serializable{
 
     public String toString(){
         StringBuilder r = new StringBuilder();
+        r.append("Nome: ").append(this.name).append("\n");
         r.append("Email: ").append(this.email).append("\n");
         r.append("Password: ").append(this.password).append("\n");
 	r.append("Encomendas: ").append(this.registo.toString());
 	return r.toString();
-    }
-
-    public int compareTo (Account a){
-         return this.email.compareTo(a.getEmail());
     }
 
     public List<Encomenda> getEncomendaBetween(LocalDate init, LocalDate end){
@@ -96,5 +105,9 @@ public class Account implements Serializable{
     
     public int qtsClientes(){
         return this.registo.size();
+    }
+    
+    public int compareTo (Account a){
+         return this.email.compareTo(a.getEmail());
     }
 }

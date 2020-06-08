@@ -16,7 +16,6 @@ public class Loja extends Account
     
     public Loja(){
         super();
-        this.NomeLoja = "";
         this.CodLoja = "";
         this.GPS = new Location(0.0,0.0);
         this.sinal = false;
@@ -25,8 +24,7 @@ public class Loja extends Account
     
     public Loja(String em,String pa,List<Encomenda> re,
                 String n,String c,Location loc){
-        super(em,pa,re);
-        this.NomeLoja = n;
+        super(n,em,pa,re);
         this.CodLoja = c;
         this.GPS = loc;
         this.sinal = false;
@@ -35,7 +33,6 @@ public class Loja extends Account
     
     public Loja(Loja l){
         super(l);
-        this.NomeLoja = l.getNome();
         this.CodLoja = l.getCodLoja();
         this.GPS = l.getLocalizacao();
         this.sinal = l.getSinal();
@@ -45,13 +42,11 @@ public class Loja extends Account
     public String getCodLoja(){return this.CodLoja;}
     
     public boolean getSinal(){return this.sinal;}
-    
-    public String getNome(){return this.NomeLoja;}
-    
+        
     public Location getLocalizacao(){return this.GPS.clone();}
     
-    public Encomenda getEncomenda(String nome){
-        return this.encomendas.get(nome).clone();
+    public Encomenda getEncomenda(String cod){
+        return this.encomendas.get(cod).clone();
     }
     
     public Map<String,Encomenda> getEncomendas(){
@@ -86,7 +81,6 @@ public class Loja extends Account
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append("Loja:\n").append(this.CodLoja).append("\n")
-                            .append(this.NomeLoja).append("\n")
                             .append(this.GPS);                            
         return sb.toString();                    
     }
@@ -95,7 +89,7 @@ public class Loja extends Account
         if(o == this) return true;
         if(o == null || o.getClass() != this.getClass()) return false;
         Loja l = (Loja) o;
-        return this.NomeLoja.equals(l.getNome()) && this.CodLoja == l.getCodLoja() 
+        return this.CodLoja == l.getCodLoja() 
                && this.GPS.equals(l.getLocalizacao());
     }
     
