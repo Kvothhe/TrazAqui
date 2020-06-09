@@ -29,14 +29,14 @@ public class Encomenda
     }
     
     public Encomenda(String r,String f,String c,double p,
-                        LocalDate n,LocalDate o,List<LinhaEncomenda> l){
+                        List<LinhaEncomenda> l){
         this.referencia = r;
         this.fornecedor = f;
         this.cliente = c;
         this.peso = p;
         this.med = false;
-        this.dataentrega = n;
-        this.databusca = o;
+        this.dataentrega = LocalDate.now();
+        this.databusca = LocalDate.now();
         setProdutos(l);
     }
     
@@ -107,6 +107,14 @@ public class Encomenda
     
     public void setDataentrega(LocalDate t){
         this.dataentrega = t;
+    }
+    
+    public void setCliente(String l){
+        this.cliente = l;
+    }
+    
+    public void setFornecedor(String op){
+        this.fornecedor = op;
     }
     
     public void setDatabusca(LocalDate p){

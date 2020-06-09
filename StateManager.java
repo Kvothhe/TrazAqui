@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
+import java.util.Set;
 import java.util.Map;
 import java.util.Iterator;
 import java.util.stream.Stream;
@@ -32,6 +33,18 @@ public class StateManager implements Serializable{
 
     public List<Account> getUserList(){
         return this.users.values().stream().map(Account::clone).collect(Collectors.toList());
+    }
+    
+    public Account getuserL(String n){
+        Iterator<Account> it = this.getUserList().iterator();
+        
+    }
+    
+    public void getemails(){
+        Set<String> keys = users.keySet();
+        for(String key: keys){
+            System.out.println(key);
+        }
     }
 
     public boolean userExists(String uEmail){

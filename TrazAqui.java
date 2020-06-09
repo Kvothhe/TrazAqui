@@ -47,7 +47,6 @@ public class TrazAqui
                 System.out.println("Não está carregado! (" + e.getMessage() + ")");
             }   
         } 
-    
         mApp.run(false);
     }
     
@@ -57,15 +56,83 @@ public class TrazAqui
         {
             if(!loggedIn)
                 loggedIn = this.menuActions();
-            /*
+            
             else
             { 
-                if(this.curUser instanceof Client)
-                    loggedIn = this.userActions();
-                else loggedIn = this.driverActions();
+                this.userActions();
             }
-            */   
+              
         }while(this.appMenu.getOpt() != 0);
+    }
+    
+    public boolean userActions(){
+        boolean login=true;
+
+        this.appMenu.utiMenu();
+        switch(this.appMenu.getOpt()){
+                case 1:
+                    addEncUti();
+                    break;
+                case 2:
+                    System.out.println(showRegisto());
+                case 3:
+                    login = false;
+                    System.out.println("Logging out");
+                    this.curState.updateUser(this.curUser);
+                    break;
+                case 0:
+                    System.out.println("Exiting...");
+                    save();
+                    login = false;
+                    break;
+        }
+        return login;
+    }
+    
+    public void addEncUti(){
+        Utilizador aux = (Utilizador)this.curUser;
+        Scanner in = new Scanner(System.in);
+        Encomenda e = new Encomenda();
+        LinhaEncomenda le = new LinhaEncomenda();
+        
+        String lj = null;
+        String cd = null;
+        double qt = 0;
+        double valor = 0;
+        
+        System.out.println("Insira a loja");
+        lj = in.nextLine();
+        e.setFornecedor(lj);
+        System.out.println("Insira o código do produto: ");
+        cd = in.nextLine();
+        le.setCodproduto(cd);
+        System.out.println("Insira a quantidade: ");
+        qt = in.nextDouble();
+        le.setQuantidade(qt);
+        System.out.println("Insira o valor: ");
+        valor = in.nextDouble();
+        le.setValorunitario(valor);
+        
+        e.setCliente(aux.getCodigo());
+        aux.addEncomenda(e);
+    }
+    
+    public void classSer(){
+        Utilizador aux = (Utilizador)this.curUser;
+        Scanner in = new Scanner(System.in);
+        String ser = null;
+        Servico s = this.curState.getUserList().get
+        
+        int cla = 0;
+        
+        System.out.println("Insira o nome do Servico: ");
+        ser = in.nextLine();
+        System.out.println("Insira a classificação: ");
+        cla = in.nextInt();
+    }
+    
+    public List<Encomenda> showRegisto(){
+        return this.curUser.getRegisto();
     }
     
     public void save(){
@@ -99,7 +166,6 @@ public class TrazAqui
         this.appMenu.mMenu();
         switch(this.appMenu.getOpt()){
             case 1:
-            /*
                 try{
                     aux = login();
                     login = true;
@@ -107,7 +173,7 @@ public class TrazAqui
                     System.out.println("Login aceite");
                 }catch(WrongPasswordException | UserNotFoundException e){
                     System.out.println(e.getMessage());
-                }*/
+                }
                 break;
             case 2:
                 try{
@@ -127,13 +193,16 @@ public class TrazAqui
             case 5:
                 ReadLogs readlogs = new ReadLogs(); 
                 readlogs.read(this.curState);
+                /*
+                System.out.println(this.curState.getUserList());
+                System.out.println(this.curState.userExists("t51@email.pt"));
+                this.curState.getppp();*/
                 break;
             case 0:
                 save();
                 System.out.println("A sair...");
                 break;
         }
-
         return login;
     }
 
@@ -175,6 +244,33 @@ public class TrazAqui
         System.out.println("NIF:");
         return input.nextLine();
     }
+    
+    public Account login () throws WrongPasswordException, UserNotFoundException{
+        boolean enter = false, success = false;
+        String email = null, password = null;
+        Account ret = null;
+        
+        while(!success){
+            try{
+                Scanner input = new Scanner(System.in);
+                System.out.print("Email: ");
+                email = input.nextLine();
+                System.out.print("Password: ");
+                password = input.nextLine();
+                success = true;
+            }catch(Exception e){
+                System.out.println("Input error ("+e.getMessage() + ") please try again");
+            }
+        }
+        
+        if(this.curState.userExists(email)){
+            ret = this.curState.getUser(email);
+            enter = ret.getPassword().equals(password);
+        }else throw new UserNotFoundException("No user found with "+ email);
+
+        if(enter) return ret;
+        else throw new WrongPasswordException("Incorrect password for "+email); //paswords didn't match
+    }
 
     public Account register () throws DuplicateRegistrationException{
         Scanner input = new Scanner(System.in);
@@ -209,13 +305,13 @@ public class TrazAqui
             }
             catch(Exception e)
             {
-		        System.out.println("Input error ("+e.getMessage() + ") please try again");
+                System.out.println("Input error ("+e.getMessage() + ") please try again");
                 input.nextLine();
             }
         }
 
         if(this.curState.userExists(email)) throw new DuplicateRegistrationException(email);
-	    
+        
         if(type == 1)
             ret = new Utilizador(nome, email, password, new ArrayList<Encomenda>(), atribuirCod(type), askLocation());
         
@@ -229,17 +325,19 @@ public class TrazAqui
         if(type == 4)
             ret = new Loja(email, password, new ArrayList<Encomenda>(), nome, atribuirCod(type), askLocation());
     
-	    return ret; 
+        return ret; 
     }
-    /*
+    
     public String top10Uti(){
         StringBuilder sb = new StringBuilder();
+        
         List<String> aux = this.curState.getUsers().values().stream()
                                .filter(a->a.getClass().getSimpleName().equals("Utilizador"))
                                .sorted(new UsarComparator())
                                .limit(10)
                                .map(a->a.getNome())
                                .collect(Collectors.toList());
+                                       
         int i=1;
         for(String st : aux){
             sb.append(i).append("- ").append(st).append("\n");
@@ -247,5 +345,5 @@ public class TrazAqui
         }
 
         return sb.toString();
-    }*/
+    }
 }

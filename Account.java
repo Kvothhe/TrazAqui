@@ -13,11 +13,11 @@ public class Account implements Comparable<Account>,Serializable{
     private List<Encomenda> registo;
 
     public Account(){
-	   this.email = null;
-	   this.password = null;
-	   this.name = null;
+       this.email = null;
+       this.password = null;
+       this.name = null;
        this.cod = null;
-	   this.registo = new ArrayList<>();
+       this.registo = new ArrayList<>();
     }
 
     public Account(String n,String email, String password,List<Encomenda> tvl, String cod){
@@ -33,7 +33,7 @@ public class Account implements Comparable<Account>,Serializable{
         this.email = a.getEmail();
         this.password = a.getPassword();
         this.name = a.getNome();
-	    this.cod = a.getCod();
+        this.cod = a.getCod();
         this.registo = a.getEncomenda();
     }
     
@@ -51,6 +51,10 @@ public class Account implements Comparable<Account>,Serializable{
 
     public String getPassword(){
             return this.password;
+    }
+    
+    public List<Encomenda> getRegisto(){
+        return this.registo.stream().map(t->t.clone()).collect(Collectors.toList());
     }
 
     public List<Encomenda> getEncomenda(){
@@ -73,10 +77,14 @@ public class Account implements Comparable<Account>,Serializable{
         this.registo = nTL.stream()
                           .map(Encomenda::clone)
                           .collect(Collectors.toCollection(ArrayList::new)); 
-    }	
+    }   
+    
+    public void addEncomenda(Encomenda e){
+        registo.add(e);
+    }
 
     public Account clone(){
-	       return new Account(this);
+           return new Account(this);
     }
 
     public boolean equals(Object o){
@@ -92,19 +100,15 @@ public class Account implements Comparable<Account>,Serializable{
         r.append("Nome: ").append(this.name).append("\n");
         r.append("Email: ").append(this.email).append("\n");
         r.append("Password: ").append(this.password).append("\n");
-	    r.append("Encomendas: ").append(this.registo.toString());
-	return r.toString();
+        r.append("Encomendas: ").append(this.registo.toString());
+    return r.toString();
     }
 
     public List<Encomenda> getEncomendaBetween(LocalDate init, LocalDate end){
-    	return this.registo.stream()
-    	       .filter(t->t.getDataentrega().isAfter(init) 
-    	       && t.getDataentrega().isBefore(end))
+        return this.registo.stream()
+               .filter(t->t.getDataentrega().isAfter(init) 
+               && t.getDataentrega().isBefore(end))
                .collect(Collectors.toList()); 
-    }
-
-    public void addEncomenda(Encomenda t){
-    	this.registo.add(t.clone());
     }
     
     public int qtsClientes(){
