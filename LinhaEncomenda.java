@@ -12,9 +12,9 @@ public class LinhaEncomenda
         this.valorunitario = 0;
     }
     
-    public LinhaEncomenda(String cod,double q,double val){
+    public LinhaEncomenda(String cod,String n,double q,double val){
         this.CodProduto = cod;
-        this.Descricao = "";
+        this.Descricao = n;
         this.quantidade = q;
         this.valorunitario = val;
     }

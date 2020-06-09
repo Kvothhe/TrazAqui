@@ -74,8 +74,10 @@ public class TrazAqui
                     addEncUti();
                     break;
                 case 2:
-                    System.out.println(showRegisto());
+                    classSer();
                 case 3:
+                    System.out.println(showRegisto());
+                case 4:
                     login = false;
                     System.out.println("Logging out");
                     this.curState.updateUser(this.curUser);
@@ -95,6 +97,7 @@ public class TrazAqui
         Encomenda e = new Encomenda();
         LinhaEncomenda le = new LinhaEncomenda();
         
+        String pr = null;
         String lj = null;
         String cd = null;
         double qt = 0;
@@ -103,6 +106,9 @@ public class TrazAqui
         System.out.println("Insira a loja");
         lj = in.nextLine();
         e.setFornecedor(lj);
+        System.out.println("Insira a descrição do produto: ");
+        pr = in.nextLine();
+        le.setDescricao(pr);
         System.out.println("Insira o código do produto: ");
         cd = in.nextLine();
         le.setCodproduto(cd);
@@ -121,7 +127,6 @@ public class TrazAqui
         Utilizador aux = (Utilizador)this.curUser;
         Scanner in = new Scanner(System.in);
         String ser = null;
-        Servico s = this.curState.getUserList().get
         
         int cla = 0;
         
@@ -129,6 +134,10 @@ public class TrazAqui
         ser = in.nextLine();
         System.out.println("Insira a classificação: ");
         cla = in.nextInt();
+        
+        Account a = this.curState.getuserL(ser,this.curState.getUserList());
+        Servico s = (Servico) a;
+        //a.classificar(a,cla);
     }
     
     public List<Encomenda> showRegisto(){
@@ -149,7 +158,7 @@ public class TrazAqui
     private TrazAqui() throws TooManyInstancesException{
         if(count == 0){
             String[] mOps = {"Login", "Registar", "Top 10 utilizadores", "Top 10 empresas", "Read Logs"};
-            String[] uOps = {"Inserir Pedido", "Classificar Serviço", "Logout"};
+            String[] uOps = {"Inserir Pedido", "Classificar Serviço","Registo compras","Logout"};
             String[] lOps = {"Inserir informação","Logout"};
             String[] eOps = {"Total faturado","Logout"};
             this.curState = new StateManager();

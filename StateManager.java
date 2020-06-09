@@ -35,9 +35,18 @@ public class StateManager implements Serializable{
         return this.users.values().stream().map(Account::clone).collect(Collectors.toList());
     }
     
-    public Account getuserL(String n){
-        Iterator<Account> it = this.getUserList().iterator();
+    public Account getuserL(String n,List<Account> lo){
+        boolean encontrado = false;
+        Iterator<Account> it = lo.iterator();
+        Account a = new Account();
         
+        while(it.hasNext() && !encontrado){
+            a = it.next();
+            if(a.getNome().equals(n)){
+                encontrado = true;
+            }
+        }
+        return a;
     }
     
     public void getemails(){
