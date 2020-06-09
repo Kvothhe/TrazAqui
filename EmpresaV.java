@@ -15,9 +15,9 @@ public class EmpresaV extends Servico
         this.taxakm = 0;
     }
     
-    public EmpresaV(String cod,String n,Location l,double r,
+    public EmpresaV(List<Encomenda> list, String email, String password, String cod,String n,Location l,double r,
     String ni,double txak){
-        super(cod,n,l,r);
+        super(list, email, password, cod,n,l,r);
         this.enc = new ArrayList<>();
         this.nif = ni;
         this.taxakm = txak;

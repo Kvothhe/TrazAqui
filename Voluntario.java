@@ -9,8 +9,8 @@ public class Voluntario extends Servico
         super();
     }
     
-    public Voluntario(String cod,String n,Location l,double r,Encomenda en){
-        super(cod,n,l,r);
+    public Voluntario(List<Encomenda> list,String email, String password,String cod,String n,Location l,double r,Encomenda en){
+        super(list, email, password, cod,n,l,r);
         this.enc = en;
     }
     

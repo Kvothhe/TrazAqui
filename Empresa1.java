@@ -12,9 +12,9 @@ public class Empresa1 extends Servico
         this.taxakm = 0.0;
     }
     
-    public Empresa1(String cod,String n,Location l,double r,
+    public Empresa1(List<Encomenda> list, String email, String password, String cod,String n,Location l,double r,
     String ni,double txak){
-        super(cod,n,l,r);
+        super(list, email, password, cod,n,l,r);
         this.enc = new Encomenda();
         this.nif = ni;
         this.taxakm = txak;

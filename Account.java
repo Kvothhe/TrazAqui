@@ -9,19 +9,22 @@ public class Account implements Comparable<Account>,Serializable{
     private String email;
     private String password;
     private String name;
+    private String cod;
     private List<Encomenda> registo;
 
     public Account(){
 	   this.email = null;
 	   this.password = null;
 	   this.name = null;
+       this.cod = null;
 	   this.registo = new ArrayList<>();
     }
 
-    public Account(String n,String email, String password,List<Encomenda> tvl){
+    public Account(String n,String email, String password,List<Encomenda> tvl, String cod){
         this.email = email;
         this.password = password;
         this.name = n;
+        this.cod = cod;
         this.registo = tvl.stream().map(Encomenda::clone).
                         collect(Collectors.toCollection(ArrayList::new));
     }
@@ -30,7 +33,8 @@ public class Account implements Comparable<Account>,Serializable{
         this.email = a.getEmail();
         this.password = a.getPassword();
         this.name = a.getNome();
-	this.registo = a.getEncomenda();
+	    this.cod = a.getCod();
+        this.registo = a.getEncomenda();
     }
     
     public void setNome(String n){
@@ -88,7 +92,7 @@ public class Account implements Comparable<Account>,Serializable{
         r.append("Nome: ").append(this.name).append("\n");
         r.append("Email: ").append(this.email).append("\n");
         r.append("Password: ").append(this.password).append("\n");
-	r.append("Encomendas: ").append(this.registo.toString());
+	    r.append("Encomendas: ").append(this.registo.toString());
 	return r.toString();
     }
 
@@ -109,5 +113,10 @@ public class Account implements Comparable<Account>,Serializable{
     
     public int compareTo (Account a){
          return this.email.compareTo(a.getEmail());
+    }
+
+    public String getCod()
+    {
+        return this.cod;
     }
 }

@@ -46,4 +46,55 @@ public class StateManager implements Serializable{
     public Account getUser(String mail){
         return this.users.get(mail);
     }
+
+    public String strType(int type)
+    {
+        String ret = "";
+
+        switch(type)
+        {
+            case 1:
+                ret = "u";
+                break;
+            case 2:
+                ret = "v";
+                break;
+            case 3:
+                ret = "t";
+                break;
+            case 4:
+                ret = "l";
+                break;
+        }
+
+        return ret;
+    }
+
+    //Isto deve estar pouco eficiente mas n vejo outra maneira de fazer com o trabalho asssim estruturado
+    public String minValueMaisUm(int type)
+    {
+        String s = "";
+        int aux = 0;
+
+        for(Map.Entry<String,Account> entry : this.users.entrySet())
+        {
+            String key = entry.getValue().getCod();
+
+            if(type == 1 && key.charAt(0) == 'u')
+                aux = Integer.parseInt(key.substring(1,key.length()));
+
+            if(type == 2 && key.charAt(0) == 'v')
+                aux = Integer.parseInt(key.substring(1,key.length()));
+            
+            if(type == 3 && key.charAt(0) == 't')
+                aux = Integer.parseInt(key.substring(1,key.length()));
+
+            if(type == 4 && key.charAt(0) == 'l')
+                aux = Integer.parseInt(key.substring(1,key.length()));
+
+        }
+        aux++;
+
+        return (strType(type) + String.valueOf(aux));
+    }
 }

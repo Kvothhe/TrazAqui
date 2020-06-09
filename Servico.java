@@ -16,6 +16,7 @@ public abstract class Servico extends Account
     private Location localizacao;
     
     public Servico(){
+        super();
         this.nome = "";
         this.codigo = "";
         this.classificacao = 0.0;
@@ -26,7 +27,8 @@ public abstract class Servico extends Account
         this.localizacao = new Location(0.0,0.0);
     }
     
-    public Servico(String cod,String n,Location l,double r){      
+    public Servico(List<Encomenda> list, String email, String password, String cod,String n,Location l,double r){
+        super(n,email, password, list, cod);      
         this.codigo = cod;
         this.nome = n;
         this.classificacao = 0;

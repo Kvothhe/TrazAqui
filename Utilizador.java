@@ -14,7 +14,7 @@ public class Utilizador extends Account
     
     public Utilizador(String n,String em,String pass,List<Encomenda> en,String cod
     ,Location l){
-        super(n,em,pass,en);
+        super(n,em,pass,en,cod);
         this.CodUtilizador = cod;
         this.GPS = l;
     }

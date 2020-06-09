@@ -24,7 +24,7 @@ public class Loja extends Account
     
     public Loja(String em,String pa,List<Encomenda> re,
                 String n,String c,Location loc){
-        super(n,em,pa,re);
+        super(n,em,pa,re, c);
         this.CodLoja = c;
         this.GPS = loc;
         this.sinal = false;
