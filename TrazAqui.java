@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.Map;
 
 public class TrazAqui
 {
@@ -83,7 +84,7 @@ public class TrazAqui
                     this.curState.updateUser(this.curUser);
                     break;
                 case 0:
-                    System.out.println("Exiting...");
+                    System.out.println("A sair...");
                     save();
                     login = false;
                     break;
@@ -157,7 +158,7 @@ public class TrazAqui
     
     private TrazAqui() throws TooManyInstancesException{
         if(count == 0){
-            String[] mOps = {"Login", "Registar", "Top 10 utilizadores", "Top 10 empresas", "Read Logs"};
+            String[] mOps = {"Login", "Registar", "Top 10 utilizadores", "Top 10 empresas", "Read Logs", "Testes"};
             String[] uOps = {"Inserir Pedido", "Classificar Serviço","Registo compras","Logout"};
             String[] lOps = {"Inserir informação","Logout"};
             String[] eOps = {"Total faturado","Logout"};
@@ -194,10 +195,10 @@ public class TrazAqui
                 }
                 break;
             case 3:
-                //System.out.println(top10Uti());
+                System.out.println(top10Uti());
                 break;
             case 4:
-                //System.out.println(top5Drivers());
+                //System.out.println(top5Empresa());
                 break;
             case 5:
                 ReadLogs readlogs = new ReadLogs(); 
@@ -206,6 +207,9 @@ public class TrazAqui
                 System.out.println(this.curState.getUserList());
                 System.out.println(this.curState.userExists("t51@email.pt"));
                 this.curState.getppp();*/
+                break;
+            case 6:
+                testes();
                 break;
             case 0:
                 save();
@@ -354,5 +358,12 @@ public class TrazAqui
         }
 
         return sb.toString();
+    }
+
+    public void testes()
+    {
+        for(Map.Entry<String,Account> entry : this.curState.getUsers().entrySet())
+            System.out.println(entry.getValue().toString() + "\n----\n");// + a.getEncomenda());
+        
     }
 }

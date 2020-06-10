@@ -10,11 +10,15 @@ import java.io.Serializable;
 
 public class StateManager implements Serializable{
     private Map<String,Account> users;
+    //Se adicionarmos um value que é o estado da encomanda? Para já estou so a colocar aqui as aceites
+    private List<String> encAceites;
 
     public StateManager(){
         this.users = new HashMap<>();
+        this.encAceites = new ArrayList<>();
     }
     
+    //Adicionar as encomendas aceites?
     public StateManager(Map<String,Account> usersL){
         this.users = usersL.entrySet().stream().collect(Collectors.toMap(e->e.getKey(), e->e.getValue().clone()));
     }
@@ -69,6 +73,21 @@ public class StateManager implements Serializable{
         return this.users.get(mail);
     }
 
+    public Account getUserByCode(String code)
+    {
+        Account conta = null;
+
+        for(Map.Entry<String,Account> entry: this.users.entrySet())
+        {
+            conta = entry.getValue();
+
+            if(conta.getCod() == code)
+                break;
+        }
+
+        return conta;
+    }
+
     public String strType(int type)
     {
         String ret = "";
@@ -118,5 +137,10 @@ public class StateManager implements Serializable{
         aux++;
 
         return (strType(type) + String.valueOf(aux));
+    }
+
+    public void addEcoAceite(String str)
+    {
+        this.encAceites.add(str);
     }
 }

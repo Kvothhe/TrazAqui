@@ -52,6 +52,7 @@ public class Menu
         }while(this.opt == -1);
     }
     
+    //Não faz sentifo chamar Menu serviço mas sim Menu Transportadora
     public void servMenu(){
         do{
             System.out.println("*** Menu de Servico ***");

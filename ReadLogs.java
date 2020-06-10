@@ -1,10 +1,29 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.List;
 import java.util.ArrayList;
 
 public class ReadLogs
 {
+	public void addEncomenda(StateManager state, String[] parts)
+	{
+		String encoCod = parts[0].substring(10,parts[0].length());
+	
+		List<LinhaEncomenda> listaProdutos = new ArrayList<>();
+
+		for(int i = 4; i < parts.length ; i += 4)
+		{
+			LinhaEncomenda linha = new LinhaEncomenda(parts[i],parts[i+1],Double.valueOf(parts[i+2]),Double.valueOf(parts[i+3]));
+			listaProdutos.add(linha);
+		}
+
+		Encomenda encomenda = new Encomenda(encoCod, parts[2], parts[1], Double.valueOf(parts[3]), listaProdutos);
+		
+		state.getUserByCode(parts[1]).addEncomenda(encomenda);
+		state.getUserByCode(parts[2]).addEncomenda(encomenda);
+	}
+
     public void read(StateManager state)
     {
         try
@@ -45,6 +64,12 @@ public class ReadLogs
                     state.addUser(new Loja((lojaCod+"@email.pt"), lojaCod, new ArrayList<Encomenda>(), parts[1],
                     lojaCod, new Location(Double.valueOf(parts[2]),Double.valueOf(parts[3]))));
                 }
+
+                if(parts[0].charAt(0) == 'E')
+                  	addEncomenda(state,parts);
+       
+                if(parts[0].charAt(0) == 'A')
+                  	state.addEcoAceite(parts[0].substring(7,parts[0].length()));
 
             }
             myReader.close();

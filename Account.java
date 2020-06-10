@@ -20,11 +20,11 @@ public class Account implements Comparable<Account>,Serializable{
        this.registo = new ArrayList<>();
     }
 
-    public Account(String n,String email, String password,List<Encomenda> tvl, String cod){
+    public Account(String n,String email, String password,List<Encomenda> tvl, String codi){
         this.email = email;
         this.password = password;
         this.name = n;
-        this.cod = cod;
+        this.cod = codi;
         this.registo = tvl.stream().map(Encomenda::clone).
                         collect(Collectors.toCollection(ArrayList::new));
     }
@@ -39,6 +39,11 @@ public class Account implements Comparable<Account>,Serializable{
     
     public void setNome(String n){
         this.name = n;
+    }
+
+    public void setCod(String codi)
+    {
+        this.cod = codi;
     }
     
     public String getNome(){
@@ -98,6 +103,7 @@ public class Account implements Comparable<Account>,Serializable{
     public String toString(){
         StringBuilder r = new StringBuilder();
         r.append("Nome: ").append(this.name).append("\n");
+        r.append("Número: ").append(this.cod).append("\n");
         r.append("Email: ").append(this.email).append("\n");
         r.append("Password: ").append(this.password).append("\n");
         r.append("Encomendas: ").append(this.registo.toString());

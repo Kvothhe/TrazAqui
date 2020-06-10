@@ -28,7 +28,7 @@ public abstract class Servico extends Account
     }
     
     public Servico(List<Encomenda> list, String email, String password, String cod,String n,Location l,double r){
-        super(n,email, password, list, cod);      
+        super(n,email, password, list, cod);
         this.codigo = cod;
         this.nome = n;
         this.classificacao = 0;
@@ -131,6 +131,6 @@ public abstract class Servico extends Account
         sb.append(this.codigo).append("\n").append(this.nome).append("\n").
         append(this.localizacao).append("\n").append(this.raio);
         
-        return sb.toString();
+        return super.toString() + sb.toString();
     }    
 }
