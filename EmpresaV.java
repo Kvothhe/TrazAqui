@@ -12,6 +12,7 @@ public class EmpresaV extends Account
     private double velocidademed;
     private boolean disponibilidade;
     private boolean medicamentos;
+    private Location loc;
     private List<Encomenda> enc;
     private String nif;
     private static double taxakm;
@@ -21,6 +22,7 @@ public class EmpresaV extends Account
         this.nome = "";
         this.codigo = "";
         this.classificacao = 0.0;
+        this.loc = new Location();
         this.uti = 0;
         this.raio = 0.0;
         this.velocidademed = 0.0;
@@ -33,7 +35,8 @@ public class EmpresaV extends Account
     public EmpresaV(List<Encomenda> list, String email, String password, String cod,String n,Location l,double r,
     String ni,double txak){
         //super(list, email, password, cod,n,l,r);
-        super(n,email, password, list, cod,l);
+        super(n,email, password, list, cod);
+        this.loc = l;
         this.codigo = cod;
         this.nome = n;
         this.classificacao = 0;
@@ -59,6 +62,14 @@ public class EmpresaV extends Account
         this.enc = emp.getEncomendas();
         this.nif = emp.getNif();
         this.taxakm = emp.getTaxakm();
+    }
+    
+    public Location getLoc(){
+        return this.loc;
+    }
+    
+    public void setLoc(Location l){
+        this.loc = l;
     }
     
     public List<Encomenda> getEncomendas(){

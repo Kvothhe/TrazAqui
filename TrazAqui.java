@@ -98,9 +98,14 @@ public class TrazAqui
     
     public void addEncUti(){
         Utilizador aux = (Utilizador)this.curUser;
+        Location l = aux.getLoc();
+        Loja loj = new Loja();
         Scanner in = new Scanner(System.in);
         Encomenda e = new Encomenda();
         LinhaEncomenda le = new LinhaEncomenda();
+        Voluntario volu = new Voluntario();
+        EmpresaV empv = null;
+        Account a = null;
         
         String pr = null;
         String lj = null;
@@ -108,8 +113,11 @@ public class TrazAqui
         double qt = 0;
         double valor = 0;
         
-        System.out.println("Insira a loja");
+        System.out.println("Insira o código da loja");
         lj = in.nextLine();
+        loj = (Loja) this.curState.getUser(lj+"@email.pt");
+        Location lojaloc = loj.getLoc();
+        System.out.println(lojaloc);
         e.setFornecedor(lj);
         System.out.println("Insira a descrição do produto: ");
         pr = in.nextLine();
@@ -126,6 +134,18 @@ public class TrazAqui
         
         e.setCliente(aux.getCodigo());
         aux.addEncomenda(e);
+        volu = aux.retornacloseVol(l,lojaloc,this.curState.getUserList());
+        System.out.println(volu.getNome());
+        //empv = aux.retornacloseEmp(l,lojaloc,this.curState.getUserList());
+        /*
+        if(volu != null){
+        	volu.addEncomenda(e);
+        	System.out.println(volu.getNome());
+        }
+        else{
+        	empv.addEncomenda(e);
+        	System.out.println(volu.getNome());        	
+        }*/
     }
     
     public void classSer(){
@@ -155,10 +175,6 @@ public class TrazAqui
     
     public List<Encomenda> showRegisto(){
         return this.curUser.getRegisto();
-    }
-    
-    public Location mostraLoc(){
-        return this.curUser.getLoc();
     }
     
     public void save(){

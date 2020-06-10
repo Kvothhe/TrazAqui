@@ -9,29 +9,31 @@ public class Voluntario extends Account
     private int uti;
     private double raio;
     private double velocidademed;
+    private Location loc;
     private boolean disponibilidade;
     private boolean medicamentos;
     private Encomenda enc;
     
     public Voluntario(){
         super();
-        this.nome = "";
         this.codigo = "";
         this.classificacao = 0.0;
+        this.loc = new Location();
         this.uti = 0;
         this.raio = 0.0;
         this.velocidademed = 0.0;
+        this.disponibilidade = true;
         this.medicamentos = false;
     }
     
     public Voluntario(List<Encomenda> list,String email, String password,String cod,String n,Location l,double r,Encomenda en){
-        super(n,email, password, list, cod,l);
+        super(n,email, password, list, cod);
         this.codigo = cod;
-        this.nome = n;
         this.classificacao = 0.0;
+        this.loc = l;
         this.raio = r;
         this.velocidademed = 0;
-        this.disponibilidade = false;
+        this.disponibilidade = true;
         this.medicamentos = false;
         this.uti = 0;
         this.enc = en;
@@ -39,7 +41,16 @@ public class Voluntario extends Account
     
     public Voluntario(Voluntario v){
         super(v);
+        //completar
         this.enc = v.getEncomendap();
+    }
+
+    public Location getLoc(){
+        return this.loc;
+    }
+    
+    public void setLoc(Location l){
+        this.loc = l;
     }
     
     public Encomenda getEncomendap(){
@@ -68,10 +79,6 @@ public void setVelocidademed(double l){
     
     public String getCodigo(){
         return this.codigo;
-    }
-    
-    public String getNome(){
-        return this.nome;
     }
     
     public void setClassificacao(double d){
