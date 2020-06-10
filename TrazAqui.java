@@ -76,8 +76,11 @@ public class TrazAqui
                     break;
                 case 2:
                     classSer();
+                    break;
                 case 3:
                     System.out.println(showRegisto());
+                    System.out.println(mostraLoc());
+                    break;
                 case 4:
                     login = false;
                     System.out.println("Logging out");
@@ -131,18 +134,22 @@ public class TrazAqui
         
         int cla = 0;
         
-        System.out.println("Insira o nome do Servico: ");
+        System.out.println("Insira o email do Servico: ");
         ser = in.nextLine();
         System.out.println("Insira a classificação: ");
         cla = in.nextInt();
         
-        Account a = this.curState.getuserL(ser,this.curState.getUserList());
-        Servico s = (Servico) a;
-        //a.classificar(a,cla);
+        //Account a = this.curState.getuserL(ser,this.curState.getUserList());
+         EmpresaV a = (EmpresaV) this.curState.getUser(ser);
+         a.addClassificacao(cla);
     }
     
     public List<Encomenda> showRegisto(){
         return this.curUser.getRegisto();
+    }
+    
+    public Location mostraLoc(){
+        return this.curUser.getLoc();
     }
     
     public void save(){

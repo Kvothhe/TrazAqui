@@ -46,8 +46,9 @@ public class StateManager implements Serializable{
         
         while(it.hasNext() && !encontrado){
             a = it.next();
-            if(a.getNome().equals(n)){
+            if((a.getNome()).equals(n)){
                 encontrado = true;
+                return a;
             }
         }
         return a;

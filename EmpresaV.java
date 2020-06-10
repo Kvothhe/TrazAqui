@@ -12,7 +12,6 @@ public class EmpresaV extends Account
     private double velocidademed;
     private boolean disponibilidade;
     private boolean medicamentos;
-    private Location localizacao;
     private List<Encomenda> enc;
     private String nif;
     private static double taxakm;
@@ -26,7 +25,6 @@ public class EmpresaV extends Account
         this.raio = 0.0;
         this.velocidademed = 0.0;
         this.medicamentos = false;
-        this.localizacao = new Location(0.0,0.0);
         this.enc = new ArrayList<>();
         this.nif = "";
         this.taxakm = 0;
@@ -35,7 +33,7 @@ public class EmpresaV extends Account
     public EmpresaV(List<Encomenda> list, String email, String password, String cod,String n,Location l,double r,
     String ni,double txak){
         //super(list, email, password, cod,n,l,r);
-        super(n,email, password, list, cod);
+        super(n,email, password, list, cod,l);
         this.codigo = cod;
         this.nome = n;
         this.classificacao = 0;
@@ -43,7 +41,6 @@ public class EmpresaV extends Account
         this.velocidademed = 0;
         this.disponibilidade = false;
         this.medicamentos = false;
-        this.localizacao = l;
         this.uti = 0;
         this.enc = new ArrayList<>();
         this.nif = ni;
@@ -59,7 +56,6 @@ public class EmpresaV extends Account
         this.velocidademed = emp.getVelocidademed();
         this.disponibilidade = emp.getDisponibilidade();
         this.medicamentos = emp.getMedicamentos();
-        this.localizacao = emp.getLocalizacao();
         this.enc = emp.getEncomendas();
         this.nif = emp.getNif();
         this.taxakm = emp.getTaxakm();
@@ -139,10 +135,6 @@ public class EmpresaV extends Account
     
     public boolean getMedicamentos(){
         return this.medicamentos;
-    }
-    
-    public Location getLocalizacao(){
-        return this.localizacao;
     }
     
     public void addClassificacao(int i){

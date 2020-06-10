@@ -10,6 +10,7 @@ public class Account implements Comparable<Account>,Serializable{
     private String password;
     private String name;
     private String cod;
+    private Location loc;
     private List<Encomenda> registo;
 
     public Account(){
@@ -17,12 +18,14 @@ public class Account implements Comparable<Account>,Serializable{
        this.password = null;
        this.name = null;
        this.cod = null;
+       this.loc = new Location();
        this.registo = new ArrayList<>();
     }
 
-    public Account(String n,String email, String password,List<Encomenda> tvl, String codi){
+    public Account(String n,String email, String password,List<Encomenda> tvl, String codi,Location l){
         this.email = email;
         this.password = password;
+        this.loc = l;
         this.name = n;
         this.cod = codi;
         this.registo = tvl.stream().map(Encomenda::clone).
@@ -32,9 +35,18 @@ public class Account implements Comparable<Account>,Serializable{
     public Account (Account a){
         this.email = a.getEmail();
         this.password = a.getPassword();
+        this.loc = a.getLoc();
         this.name = a.getNome();
         this.cod = a.getCod();
         this.registo = a.getEncomenda();
+    }
+    
+    public Location getLoc(){
+        return this.loc;
+    }
+    
+    public void setLoc(Location l){
+        this.loc = l;
     }
     
     public void setNome(String n){
@@ -106,8 +118,9 @@ public class Account implements Comparable<Account>,Serializable{
         r.append("Número: ").append(this.cod).append("\n");
         r.append("Email: ").append(this.email).append("\n");
         r.append("Password: ").append(this.password).append("\n");
+        r.append("Localização: ").append(this.loc).append("\n");
         r.append("Encomendas: ").append(this.registo.toString());
-    return r.toString();
+        return r.toString();
     }
 
     public List<Encomenda> getEncomendaBetween(LocalDate init, LocalDate end){

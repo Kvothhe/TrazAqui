@@ -11,7 +11,6 @@ public class Voluntario extends Account
     private double velocidademed;
     private boolean disponibilidade;
     private boolean medicamentos;
-    private Location localizacao;
     private Encomenda enc;
     
     public Voluntario(){
@@ -23,11 +22,10 @@ public class Voluntario extends Account
         this.raio = 0.0;
         this.velocidademed = 0.0;
         this.medicamentos = false;
-        this.localizacao = new Location(0.0,0.0);
     }
     
     public Voluntario(List<Encomenda> list,String email, String password,String cod,String n,Location l,double r,Encomenda en){
-        super(n,email, password, list, cod);
+        super(n,email, password, list, cod,l);
         this.codigo = cod;
         this.nome = n;
         this.classificacao = 0;
@@ -35,7 +33,6 @@ public class Voluntario extends Account
         this.velocidademed = 0;
         this.disponibilidade = false;
         this.medicamentos = false;
-        this.localizacao = l;
         this.uti = 0;
         this.enc = en;
     }
@@ -99,10 +96,6 @@ public void setVelocidademed(double l){
     
     public boolean getMedicamentos(){
         return this.medicamentos;
-    }
-    
-    public Location getLocalizacao(){
-        return this.localizacao;
     }
     
     public void addClassificacao(int i){

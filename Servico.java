@@ -1,4 +1,4 @@
-import java.util.List;
+/*import java.util.List;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.time.Duration;
@@ -13,7 +13,6 @@ public abstract class Servico extends Account
     private double velocidademed;
     private boolean disponibilidade;
     private boolean medicamentos;
-    private Location localizacao;
     
     public Servico(){
         super();
@@ -133,4 +132,4 @@ public abstract class Servico extends Account
         
         return super.toString() + sb.toString();
     }    
-}
+}*/
