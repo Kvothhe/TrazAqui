@@ -20,8 +20,14 @@ public class ReadLogs
 
 		Encomenda encomenda = new Encomenda(encoCod, parts[2], parts[1], Double.valueOf(parts[3]), listaProdutos);
 		
-		state.getUserByCode(parts[1]).addEncomenda(encomenda);
-		state.getUserByCode(parts[2]).addEncomenda(encomenda);
+		
+		for(int i = 1; i < 3; i++)
+		{	
+			Account aux = state.getUserByCode(parts[i]);
+
+			if(aux != null) 
+				aux.addEncomenda(encomenda);
+		}
 	}
 
     public void read(StateManager state)

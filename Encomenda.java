@@ -64,12 +64,12 @@ public class Encomenda
     
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append(this.referencia + "\n" + this.fornecedor + "\n" + 
-                        this.cliente + "\n" + this.peso 
-                        + "\n" + this.med + "\n" + 
+        sb.append("Ref: " + this.referencia + "\nFornecedor: " + this.fornecedor + "\nCliente: " + 
+                        this.cliente + "\nPeso: " + this.peso 
+                        + "\nMed: " + this.med + "\nProdutos: " + 
                         this.produtos.toString() + 
-                        this.classificacao + "\n" + this.dataentrega
-                        + "\n" + this.databusca);
+                        this.classificacao + "\nEntrega: " + this.dataentrega
+                        + "\nBusca: " + this.databusca);
         return sb.toString();                
     }
     

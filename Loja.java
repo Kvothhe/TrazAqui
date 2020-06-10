@@ -8,15 +8,15 @@ import java.util.stream.Collectors;
 
 public class Loja extends Account
 {
-    private String NomeLoja;
-    private String CodLoja;
+    private String nomeLoja;
+    private String codLoja;
     private Location GPS;
     private boolean sinal;
     private Map<String,Encomenda> encomendas;
     
     public Loja(){
         super();
-        this.CodLoja = "";
+        this.codLoja = "";
         this.GPS = new Location(0.0,0.0);
         this.sinal = false;
         this.encomendas = new HashMap<>();
@@ -25,7 +25,8 @@ public class Loja extends Account
     public Loja(String em,String pa,List<Encomenda> re,
                 String n,String c,Location loc){
         super(n,em,pa,re, c);
-        this.CodLoja = c;
+        this.nomeLoja = n;
+        this.codLoja = c;
         this.GPS = loc;
         this.sinal = false;
         this.encomendas = new HashMap<>();
@@ -33,13 +34,13 @@ public class Loja extends Account
     
     public Loja(Loja l){
         super(l);
-        this.CodLoja = l.getCodLoja();
+        this.codLoja = l.getCodLoja();
         this.GPS = l.getLocalizacao();
         this.sinal = l.getSinal();
         this.encomendas = l.getEncomendas();
     }
     
-    public String getCodLoja(){return this.CodLoja;}
+    public String getCodLoja(){return this.codLoja;}
     
     public boolean getSinal(){return this.sinal;}
         
@@ -80,16 +81,17 @@ public class Loja extends Account
     
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append("Loja:\n").append(this.CodLoja).append("\n")
+        sb.append("Loja:").append(this.nomeLoja + "\n")
+        .append("Codigo: ").append(this.codLoja).append("\n")
                             .append(this.GPS);                            
-        return sb.toString();                    
+        return super.toString() + sb.toString();                    
     }
     
     public boolean equals(Object o){
         if(o == this) return true;
         if(o == null || o.getClass() != this.getClass()) return false;
         Loja l = (Loja) o;
-        return this.CodLoja == l.getCodLoja() 
+        return this.codLoja == l.getCodLoja() 
                && this.GPS.equals(l.getLocalizacao());
     }
     

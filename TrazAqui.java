@@ -364,6 +364,7 @@ public class TrazAqui
     {
         for(Map.Entry<String,Account> entry : this.curState.getUsers().entrySet())
             System.out.println(entry.getValue().toString() + "\n----\n");// + a.getEncomenda());
+            //System.out.println("Cod: " + entry.getValue().getCod() + "Size:" + entry.getValue().qtsClientes() + "\n----\n");// + a.getEncomenda());
         
     }
 }

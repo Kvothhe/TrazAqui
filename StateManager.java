@@ -79,10 +79,11 @@ public class StateManager implements Serializable{
 
         for(Map.Entry<String,Account> entry: this.users.entrySet())
         {
-            conta = entry.getValue();
-
-            if(conta.getCod() == code)
+            if(entry.getValue().getCod().equals(code))
+            {
+                conta = entry.getValue();
                 break;
+            }
         }
 
         return conta;

@@ -59,8 +59,8 @@ public class LinhaEncomenda
     public String toString(){
         StringBuilder sb = new StringBuilder();
         
-        sb.append(this.CodProduto).append(this.Descricao).
-        append(this.quantidade).append(this.valorunitario);
+        sb.append("Cod: " + this.CodProduto).append(" Info: " + this.Descricao).
+        append(" Quantidade: "+this.quantidade).append(" Valor: "+this.valorunitario);
         
         return sb.toString();
     }
