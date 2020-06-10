@@ -58,10 +58,12 @@ public class TrazAqui
             if(!loggedIn)
                 loggedIn = this.menuActions();
             
-            else
-            { 
-                this.userActions();
-            }
+            else if(this.curUser instanceof Utilizador){
+                loggedIn = this.userActions();
+            }/*
+            else if(this.curUser instanceOf Loja){
+                this.
+            }*/
               
         }while(this.appMenu.getOpt() != 0);
     }
@@ -79,7 +81,6 @@ public class TrazAqui
                     break;
                 case 3:
                     System.out.println(showRegisto());
-                    System.out.println(mostraLoc());
                     break;
                 case 4:
                     login = false;
@@ -139,9 +140,17 @@ public class TrazAqui
         System.out.println("Insira a classificação: ");
         cla = in.nextInt();
         
-        //Account a = this.curState.getuserL(ser,this.curState.getUserList());
-         EmpresaV a = (EmpresaV) this.curState.getUser(ser);
-         a.addClassificacao(cla);
+        Account a = this.curState.getUser(ser);
+        if(a instanceof EmpresaV){
+            EmpresaV b = (EmpresaV) this.curState.getUser(ser);
+            b.addClassificacao(cla);
+        }
+        else{
+            Voluntario v = (Voluntario) this.curState.getUser(ser);
+            v.addClassificacao(cla);
+            System.out.println(v.getClassificacao());
+        }
+            
     }
     
     public List<Encomenda> showRegisto(){

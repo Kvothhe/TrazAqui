@@ -28,7 +28,7 @@ public class Voluntario extends Account
         super(n,email, password, list, cod,l);
         this.codigo = cod;
         this.nome = n;
-        this.classificacao = 0;
+        this.classificacao = 0.0;
         this.raio = r;
         this.velocidademed = 0;
         this.disponibilidade = false;
@@ -99,7 +99,9 @@ public void setVelocidademed(double l){
     }
     
     public void addClassificacao(int i){
-        double sum = this.classificacao + ((i - this.classificacao)/uti);
+        double sum = 0;
+        this.uti++;
+        sum = this.classificacao + ((i - this.classificacao)/uti);
         setClassificacao(sum);
     }
 
