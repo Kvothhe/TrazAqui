@@ -314,7 +314,7 @@ public class TrazAqui
     
     private TrazAqui() throws TooManyInstancesException{
         if(count == 0){
-            String[] mOps = {"Login", "Registar", "Top 10 utilizadores", "Top 10 empresas", "Read Logs", "Testes"};
+            String[] mOps = {"Login", "Registar", "Top 10 utilizadores", "Top 5 empresas", "Read Logs", "Testes"};
             String[] uOps = {"Inserir Pedido", "Aceitar Transporte" ,"Classificar Serviço","Registo compras","Logout"};
             String[] lOps = {"Inserir informação","Aceitar Encomenda","Logout"};
             String[] vOps = {"Mudar Disponibilidade","Mostrar Disponibilidade","Transportar Encomenda","Logout"};
@@ -355,7 +355,7 @@ public class TrazAqui
                 System.out.println(top10Uti());
                 break;
             case 4:
-                //System.out.println(top5Empresa());
+                System.out.println(top5Empresa());
                 break;
             case 5:
                 ReadLogs readlogs = new ReadLogs(); 
@@ -505,6 +505,25 @@ public class TrazAqui
                                .filter(a->a.getClass().getSimpleName().equals("Utilizador"))
                                .sorted(new UsarComparator())
                                .limit(10)
+                               .map(a->a.getNome())
+                               .collect(Collectors.toList());
+                                       
+        int i=1;
+        for(String st : aux){
+            sb.append(i).append("- ").append(st).append("\n");
+            i++;
+        }
+
+        return sb.toString();
+    }
+    
+    public String top5Empresa(){
+        StringBuilder sb = new StringBuilder();
+        
+        List<String> aux = this.curState.getUsers().values().stream()
+                               .filter(a->a.getClass().getSimpleName().equals("EmpresaV"))
+                               .sorted(new UsarComparator())
+                               .limit(5)
                                .map(a->a.getNome())
                                .collect(Collectors.toList());
                                        

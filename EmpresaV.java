@@ -7,7 +7,6 @@ import java.time.LocalDate;
 public class EmpresaV extends Account
 {
     private String codigo;
-    private String nome;
     private double classificacao;
     private int uti;
     private double raio;
@@ -15,14 +14,12 @@ public class EmpresaV extends Account
     private boolean disponibilidade;
     private boolean medicamentos;
     private Location loc;
-    private List<Encomenda> enc;
     private String nif;
     private static double taxakm;
     private double totalfat;
     
     public EmpresaV(){
         super();
-        this.nome = "";
         this.codigo = "";
         this.classificacao = 0.0;
         this.loc = new Location();
@@ -30,7 +27,6 @@ public class EmpresaV extends Account
         this.raio = 0.0;
         this.velocidademed = 0.0;
         this.medicamentos = false;
-        this.enc = new ArrayList<>();
         this.nif = "";
         this.taxakm = 0;
         this.totalfat = 0;
@@ -42,14 +38,12 @@ public class EmpresaV extends Account
         super(n,email, password, list, cod);
         this.loc = l;
         this.codigo = cod;
-        this.nome = n;
         this.classificacao = 0;
         this.raio = r;
         this.velocidademed = 0;
         this.disponibilidade = true;
         this.medicamentos = false;
         this.uti = 0;
-        this.enc = new ArrayList<>();
         this.nif = ni;
         this.taxakm = txak;
     }
@@ -58,13 +52,11 @@ public class EmpresaV extends Account
         super(emp);
         this.codigo = emp.getCodigo();
         this.loc = emp.getLoc();
-        this.nome = emp.getNome();
         this.classificacao = emp.getClassificacao();
         this.raio = emp.getRaio();
         this.velocidademed = emp.getVelocidademed();
         this.disponibilidade = emp.getDisponibilidade();
         this.medicamentos = emp.getMedicamentos();
-        this.enc = emp.getEncomendas();
         this.nif = emp.getNif();
         this.taxakm = emp.getTaxakm();
     }
@@ -77,10 +69,6 @@ public class EmpresaV extends Account
     public void setLoc(Location l){
         this.loc = l;       
 
-    }
-    
-    public List<Encomenda> getEncomendas(){
-        return this.enc.stream().map(Encomenda::clone).collect(Collectors.toList());
     }
     
     public String getNif(){
@@ -104,7 +92,7 @@ public class EmpresaV extends Account
         if(this == o) return true;
         if((o == null) || (this.getClass() != o.getClass())) return false;
         EmpresaV emp = (EmpresaV) o;
-        return super.equals(o) && this.enc.equals(emp.getEncomendas()) &&
+        return super.equals(o) &&
         this.nif == emp.getNif() && this.taxakm == emp.getTaxakm();
     }
     
@@ -182,10 +170,6 @@ public class EmpresaV extends Account
     
     public String getCodigo(){
         return this.codigo;
-    }
-    
-    public String getNome(){
-        return this.nome;
     }
     
     public void setClassificacao(double d){

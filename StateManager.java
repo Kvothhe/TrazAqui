@@ -40,6 +40,10 @@ public class StateManager implements Serializable{
         return this.users.values().stream().map(Account::clone).collect(Collectors.toList());
     }
     
+    public List<Account> getEmpList(){
+        return this.users.values().stream().map(Account::clone).collect(Collectors.toList());
+    }
+    
     public Account getuserL(String n,List<Account> lo){
         boolean encontrado = false;
         Iterator<Account> it = lo.iterator();
