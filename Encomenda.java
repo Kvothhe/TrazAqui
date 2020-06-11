@@ -36,8 +36,8 @@ public class Encomenda implements Serializable
         this.cliente = c;
         this.peso = p;
         this.med = false;
-        this.dataentrega = LocalDate.now();
-        this.databusca = LocalDate.now();
+        this.dataentrega = null; //LocalDate.now();
+        this.databusca = null; //LocalDate.now();
         setProdutos(l);
     }
     

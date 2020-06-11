@@ -60,7 +60,7 @@ public class Utilizador extends Account
                                        .filter(a->(a.getDisponibilidade() == true)) 
                                        .collect(Collectors.toList());
 
-        System.out.println("Disponiveis: " + disponiveis.toString());
+        //System.out.println("Disponiveis: " + disponiveis.toString());
         
         for(Voluntario v : disponiveis){
             if((temp = loc.distanceTo(l))<dist && temp <= v.getRaio()){
@@ -82,7 +82,9 @@ public class Utilizador extends Account
                                        .collect(Collectors.toList());
         
         for(EmpresaV v : disponiveis){
-            if((temp = loc.distanceTo(l))<dist || temp <= v.getRaio()){
+            Location localEmp = v.getLoc();
+            System.out.println(v.getNome()+localEmp);
+            if((temp = localEmp.distanceTo(l))<dist || temp <= v.getRaio()){
                 closer = v;
                 dist = temp;
             }

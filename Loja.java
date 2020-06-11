@@ -89,7 +89,7 @@ public class Loja extends Account
     
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append("Loja:").append(this.nomeLoja + "\n")
+        sb.append("Loc:").append(this.loc + "\n")
         .append("Codigo: ").append(this.codLoja).append("\n");                            
         return super.toString() + sb.toString();                    
     }

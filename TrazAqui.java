@@ -450,8 +450,8 @@ public class TrazAqui
     {
         this.curState.printEnco();
 
-     //   for(Map.Entry<String,Account> entry : this.curState.getUsers().entrySet())
-       //     System.out.println("-----\n"+entry.getValue().toString() + "\n-----\n");// + a.getEncomenda());
+        for(Map.Entry<String,Account> entry : this.curState.getUsers().entrySet())
+            System.out.println("-----\n"+entry.getValue() + "\n-----\n");// + a.getEncomenda());
             //System.out.println("Cod: " + entry.getValue().getCod() + "Size:" + entry.getValue().qtsClientes() + "\n----\n");// + a.getEncomenda());
         
     }
