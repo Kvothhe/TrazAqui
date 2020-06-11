@@ -53,6 +53,7 @@ public class EmpresaV extends Account
     public EmpresaV(EmpresaV emp){
         super(emp);
         this.codigo = emp.getCodigo();
+        this.loc = emp.getLoc();
         this.nome = emp.getNome();
         this.classificacao = emp.getClassificacao();
         this.raio = emp.getRaio();
@@ -65,11 +66,13 @@ public class EmpresaV extends Account
     }
     
     public Location getLoc(){
-        return this.loc;
+        return this.loc;        
+
     }
     
     public void setLoc(Location l){
-        this.loc = l;
+        this.loc = l;       
+
     }
     
     public List<Encomenda> getEncomendas(){

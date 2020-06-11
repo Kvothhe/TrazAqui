@@ -47,6 +47,11 @@ public class Utilizador extends Account
         return l.getEncomenda(this.CodUtilizador);
     }
     
+    public String toString()
+    {
+        return super.toString() + "\nLoc: " + this.loc;
+    }
+
     public Utilizador clone(){
         return new Utilizador(this);
     }

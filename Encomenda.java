@@ -68,7 +68,7 @@ public class Encomenda implements Serializable
         sb.append("Ref: " + this.referencia + "\nFornecedor: " + this.fornecedor + "\nCliente: " + 
                         this.cliente + "\nPeso: " + this.peso 
                         + "\nMed: " + this.med + "\nProdutos: " + 
-                        this.produtos.toString() + 
+                        this.produtos.toString() + "\n"+
                         this.classificacao + "\nEntrega: " + this.dataentrega
                         + "\nBusca: " + this.databusca);
         return sb.toString();                
