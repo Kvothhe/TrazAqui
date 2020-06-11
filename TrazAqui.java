@@ -174,6 +174,9 @@ public class TrazAqui
                     ((EmpresaV)this.curUser).transportar(this.curState);
                     break;
                 case 5:
+                    ((EmpresaV)this.curUser).transportadas();
+                    break;
+                case 6:
                     login = false;
                     System.out.println("Logging out");
                     this.curState.updateUser(this.curUser);
@@ -318,7 +321,7 @@ public class TrazAqui
             String[] uOps = {"Inserir Pedido", "Aceitar Transporte" ,"Classificar Serviço","Registo compras","Logout"};
             String[] lOps = {"Inserir informação","Aceitar Encomenda","Logout"};
             String[] vOps = {"Mudar Disponibilidade","Mostrar Disponibilidade","Transportar Encomenda","Logout"};
-            String[] eOps = {"Total faturado","Mostrar Disponibilidade","Mudar Disponibilidade","Transportar","Logout"};
+            String[] eOps = {"Total faturado","Mostrar Disponibilidade","Mudar Disponibilidade","Transportar","Encomendas Transportadas","Logout"};
             this.curState = new StateManager();
             this.curUser = null;
             this.appMenu = new Menu(uOps,lOps,vOps,eOps,mOps);

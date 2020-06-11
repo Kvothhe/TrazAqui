@@ -162,6 +162,25 @@ public class EmpresaV extends Account
                 setTotalFat(getTotalFat() + custo(lis.get(opt-1),state) );
             }
         }
+    }
+
+    public void transportadas()
+    {
+        List<Encomenda> lis = this.getEcs();
+
+        if(lis.size() != 0)
+        {
+            for(int i = 0; i < lis.size(); i++)
+            {
+                if(lis.get(i).getDatabusca() != null && lis.get(i).getDataentrega() != null)
+                    System.out.println("Encomenda " + lis.get(i).getReferencia() +  " entregue ao Cliente: " 
+                    + lis.get(i).getCliente() + " no dia: " + lis.get(i).getDataentrega());
+            }
+        }
+        else
+        {
+            System.out.println("Sem encomendas transportadas");
+        }
     }   
     
     public void setUtilizador(int u){
