@@ -42,6 +42,8 @@ public class Voluntario extends Account
     public Voluntario(Voluntario v){
         super(v);
         //completar
+        this.raio = v.getRaio();
+        this.disponibilidade = v.getDisponibilidade();
         this.loc = v.getLoc();
         this.enc = v.getEncomendap();
     }
@@ -105,7 +107,20 @@ public void setVelocidademed(double l){
     public boolean getMedicamentos(){
         return this.medicamentos;
     }
+
+    public void changeDisp()
+    {
+        this.setDisponibilidade(!this.getDisponibilidade());
+    }
     
+    public void showDisp()
+    {
+        if(this.getDisponibilidade() == true)
+            System.out.println("Disponível");
+        else
+            System.out.println("Não disponível");
+    }
+
     public void addClassificacao(int i){
         double sum = 0;
         this.uti++;

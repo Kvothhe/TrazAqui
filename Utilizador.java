@@ -68,7 +68,8 @@ public class Utilizador extends Account
         //System.out.println("Disponiveis: " + disponiveis.toString());
         
         for(Voluntario v : disponiveis){
-            if((temp = loc.distanceTo(l))<dist && temp <= v.getRaio()){
+            Location localVol = v.getLoc();
+            if((temp = localVol.distanceTo(l))<dist && temp <= v.getRaio()){
                 closer = v;
                 dist = temp;
             }
@@ -88,7 +89,6 @@ public class Utilizador extends Account
         
         for(EmpresaV v : disponiveis){
             Location localEmp = v.getLoc();
-            System.out.println(v.getNome()+localEmp);
             if((temp = localEmp.distanceTo(l))<dist || temp <= v.getRaio()){
                 closer = v;
                 dist = temp;
@@ -100,4 +100,8 @@ public class Utilizador extends Account
         return closer;
     }
     
+    public void aceiTrans(StateManager state)
+    {
+        //this.
+    }
 }

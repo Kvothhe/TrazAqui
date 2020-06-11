@@ -3,7 +3,7 @@ Requisitos básicos:
 -registar um utilizador, um voluntário, uma empresa transportadora e uma loja;✓
 -validar o acesso à aplicação utilizando as credenciais (email e password);✓
 -inserir pedidos de encomendas a uma loja, por parte de um utilizador;✓
--inserir informação de encomenda pronta a ser entregue, por parte das lojas;
+-inserir informação de encomenda pronta a ser entregue, por parte das lojas;✓
 -indicar que se pretende transportar a encomenda. No caso de ser uma empresa transportadorao utilizador que solicitou o serviço terá de aprovar que aceita o preço. Tanto voluntários como empresas apenas podem fazer transporte de encomendas de acordo com o raio de acção quetiverem definido;
 -classificar, por parte do utilizador, o serviço de entrega; ✓
 -ter acesso no perfil de cada uma das entidades à informação sobre as encomendas transpor-tadas (em função de data/hora de transporte);

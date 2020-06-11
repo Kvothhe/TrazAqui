@@ -22,12 +22,15 @@ public class ReadLogs
 		Utilizador user = (Utilizador) state.getUser(parts[1]+"@email.pt");
 		Loja loja = (Loja) state.getUser(parts[2]+"@email.pt");
 		Voluntario closerVol = user.retornacloseVol(user.getLoc(),loja.getLoc(),state.getUserList());
-		/*EmpresaV closerTrans = user.retornacloseEmp(user.getLoc(),loja.getLoc(),state.getUserList());
+		EmpresaV closerTrans = user.retornacloseEmp(user.getLoc(),loja.getLoc(),state.getUserList());
 		
 		if(closerVol != null)
-            System.out.println("Vol");
+		{
+			state.getUser(closerVol.getEmail()).addEncomenda(encomenda);
+		}
         else if(closerTrans != null)
-        	System.out.println("Trans " + closerTrans.getNome());*/
+			state.getUser(closerTrans.getEmail()).addEncomenda(encomenda);
+        
 
 		state.addEcoAceite(encoCod,false);
 		

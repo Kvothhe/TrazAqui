@@ -8,13 +8,15 @@ public class Menu
 {
     private List<String> utilizadorChoices;
     private List<String> lojaChoices;
+    private List<String> volChoices;
     private List<String> servicoChoices;
     private List<String> menuChoices;
     private int opt;
     
-    public Menu(String[] uc,String[] lc,String[] sc,String[] mc){
+    public Menu(String[] uc,String[] lc,String[] vc,String[] sc,String[] mc){
         this.opt = -1;
         this.menuChoices = Arrays.asList(mc);
+        this.volChoices = Arrays.asList(vc);
         this.servicoChoices = Arrays.asList(sc);
         this.lojaChoices = Arrays.asList(lc);
         this.utilizadorChoices = Arrays.asList(uc);
@@ -51,7 +53,23 @@ public class Menu
             readOption(this.lojaChoices.size());
         }while(this.opt == -1);
     }
-    
+
+    public void volMenu(){
+        do{
+            System.out.println("*** Menu de Voluntário ***");
+            showVoloptions();
+            readOption(this.volChoices.size());
+        }while(this.opt == -1);
+    }
+
+    public void showVoloptions(){
+        for(int i = 0; i < this.volChoices.size(); i ++){
+            System.out.printf("%d-", i+1);
+            System.out.println(this.volChoices.get(i));
+        }
+        System.out.println("0-Exit");
+    }
+
     //Não faz sentifo chamar Menu serviço mas sim Menu Transportadora
     public void servMenu(){
         do{

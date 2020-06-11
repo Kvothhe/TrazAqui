@@ -56,6 +56,9 @@ public class TrazAqui
             else if(this.curUser instanceof Utilizador){
                 loggedIn = this.userActions();
             }
+            else if(this.curUser instanceof Voluntario){
+                loggedIn = this.volActions();
+            }
             else if(this.curUser instanceof Loja){
                 loggedIn = this.lojaActions();
             }
@@ -72,10 +75,40 @@ public class TrazAqui
                     addEncUti();
                     break;
                 case 2:
-                    classSer();
+                    ((Utilizador)this.curUser).aceiTrans(this.curState);
                     break;
                 case 3:
+                    classSer();
+                    break;
+                case 4:
                     System.out.println(showRegisto());
+                    break;
+                case 5:
+                    login = false;
+                    System.out.println("Logging out");
+                    this.curState.updateUser(this.curUser);
+                    break;
+                case 0:
+                    System.out.println("A sair...");
+                    save();
+                    login = false;
+                    break;
+        }
+        return login;
+    }
+
+    public boolean volActions(){
+        boolean login=true;
+
+        this.appMenu.volMenu();
+        switch(this.appMenu.getOpt()){
+                case 1:
+                    ((Voluntario)this.curUser).changeDisp();
+                    break;
+                case 2:
+                    ((Voluntario)this.curUser).showDisp();
+                    break;
+                case 3:
                     break;
                 case 4:
                     login = false;
@@ -245,12 +278,13 @@ public class TrazAqui
     private TrazAqui() throws TooManyInstancesException{
         if(count == 0){
             String[] mOps = {"Login", "Registar", "Top 10 utilizadores", "Top 10 empresas", "Read Logs", "Testes"};
-            String[] uOps = {"Inserir Pedido", "Classificar Serviço","Registo compras","Logout"};
+            String[] uOps = {"Inserir Pedido", "Aceitar Transporte" ,"Classificar Serviço","Registo compras","Logout"};
             String[] lOps = {"Inserir informação","Aceitar Encomenda","Logout"};
+            String[] vOps = {"Mudar Disponibilidade","Mostrar Disponibilidade","Transportar Encomenda","Logout"};
             String[] eOps = {"Total faturado","Logout"};
             this.curState = new StateManager();
             this.curUser = null;
-            this.appMenu = new Menu(uOps,lOps,eOps,mOps);
+            this.appMenu = new Menu(uOps,lOps,vOps,eOps,mOps);
         }else throw new TooManyInstancesException();
     }
 
