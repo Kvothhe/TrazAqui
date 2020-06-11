@@ -2,8 +2,9 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.time.LocalDate;
+import java.io.Serializable;
 
-public class Encomenda
+public class Encomenda implements Serializable
 {
     private String referencia;
     private String cliente;
@@ -103,6 +104,11 @@ public class Encomenda
     
     public LocalDate getDatabusca(){
         return this.databusca;
+    }
+
+    public void setReferencia(String str)
+    {
+        this.referencia = str;
     }
     
     public void setDataentrega(LocalDate t){

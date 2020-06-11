@@ -1,10 +1,12 @@
 import java.time.LocalTime;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
+import java.util.Scanner;
 
 public class Loja extends Account
 {
@@ -97,6 +99,27 @@ public class Loja extends Account
         if(o == null || o.getClass() != this.getClass()) return false;
         Loja l = (Loja) o;
         return this.codLoja == l.getCodLoja();
+    }
+
+    public void aceiEncomenda(Map<String,Boolean> aceites)
+    {
+        Scanner input = new Scanner(System.in);
+        List<Encomenda> paraAceitar = new ArrayList<>();
+        List<Encomenda> lista = super.getEncomenda();
+
+        for(Encomenda enco : lista)
+        {
+            if(aceites.get(enco.getReferencia()).equals(false))
+                paraAceitar.add(enco);
+        }
+
+        System.out.println("Escolha a encomenda a aceitar:");
+        for(int i = 0; i < paraAceitar.size() ; i++)
+            System.out.println((i+1) + "-" + paraAceitar.get(i).getReferencia());
+        int option = input.nextInt();
+
+        aceites.put(paraAceitar.get(option-1).getReferencia(),true);
+
     }
     
     public Loja clone(){

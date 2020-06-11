@@ -120,7 +120,7 @@ public void setVelocidademed(double l){
     }
     
     public String toString(){      
-        return super.toString() +  this.enc.toString();
+        return super.toString() + "\nDisponibilidade: " + this.disponibilidade  + "\n" +  this.enc.toString();
     }
     
     public Voluntario clone() {return new Voluntario(this);}

@@ -3,7 +3,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class Utilizador extends Account
+public class Utilizador extends Account 
 {
     private String CodUtilizador;
     private Location loc;
@@ -60,7 +60,7 @@ public class Utilizador extends Account
                                        .filter(a->(a.getDisponibilidade() == true)) 
                                        .collect(Collectors.toList());
 
-        System.out.println(disponiveis.toString());
+        System.out.println("Disponiveis: " + disponiveis.toString());
         
         for(Voluntario v : disponiveis){
             if((temp = loc.distanceTo(l))<dist && temp <= v.getRaio()){
@@ -68,6 +68,7 @@ public class Utilizador extends Account
                 dist = temp;
             }
         }
+
         return closer;
     }
     
@@ -77,15 +78,18 @@ public class Utilizador extends Account
         List<EmpresaV> disponiveis = lis.stream()
                                        .filter(a->a.getClass().getSimpleName().equals("EmpresaV"))
                                        .map(a->(EmpresaV)a)
-                                       .filter(a->((EmpresaV)a).getDisponibilidade())
+                                       .filter(a->((EmpresaV)a).getDisponibilidade() == true)
                                        .collect(Collectors.toList());
         
         for(EmpresaV v : disponiveis){
-            if((temp = loc.distanceTo(l))<dist && temp <= v.getRaio()){
+            if((temp = loc.distanceTo(l))<dist || temp <= v.getRaio()){
                 closer = v;
                 dist = temp;
             }
         }
+
+        //System.out.println(closer);
+
         return closer;
     }
     

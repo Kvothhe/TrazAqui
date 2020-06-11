@@ -36,13 +36,13 @@ public class EmpresaV extends Account
     String ni,double txak){
         //super(list, email, password, cod,n,l,r);
         super(n,email, password, list, cod);
-        this.loc = l;
+        this.loc =  l;
         this.codigo = cod;
         this.nome = n;
         this.classificacao = 0;
         this.raio = r;
         this.velocidademed = 0;
-        this.disponibilidade = false;
+        this.disponibilidade = true;
         this.medicamentos = false;
         this.uti = 0;
         this.enc = new ArrayList<>();
@@ -93,7 +93,7 @@ public class EmpresaV extends Account
     }
     
     public String toString(){
-        return super.toString() + "\nNIF: " + this.nif + "\nTaxa: " + this.taxakm;
+        return super.toString() + "\nNIF: " + this.nif + "\nTaxa: " + this.taxakm + "\nDisp: " + this.disponibilidade;
     }
     
     public EmpresaV clone(){

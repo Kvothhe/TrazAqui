@@ -19,7 +19,7 @@ public class ReadLogs
 		}
 
 		Encomenda encomenda = new Encomenda(encoCod, parts[2], parts[1], Double.valueOf(parts[3]), listaProdutos);
-		
+		state.addEcoAceite(encoCod,false);
 		
 		for(int i = 1; i < 3; i++)
 		{	
@@ -75,7 +75,7 @@ public class ReadLogs
                   	addEncomenda(state,parts);
        
                 if(parts[0].charAt(0) == 'A')
-                  	state.addEcoAceite(parts[0].substring(7,parts[0].length()));
+                  	state.addEcoAceite(parts[0].substring(7,parts[0].length()),true);
 
             }
             myReader.close();

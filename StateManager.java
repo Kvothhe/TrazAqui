@@ -10,12 +10,11 @@ import java.io.Serializable;
 
 public class StateManager implements Serializable{
     private Map<String,Account> users;
-    //Se adicionarmos um value que é o estado da encomanda? Para já estou so a colocar aqui as aceites
-    private List<String> encAceites;
+    private Map<String,Boolean> encAceites;
 
     public StateManager(){
         this.users = new HashMap<>();
-        this.encAceites = new ArrayList<>();
+        this.encAceites = new HashMap<>();
     }
     
     //Adicionar as encomendas aceites?
@@ -59,6 +58,11 @@ public class StateManager implements Serializable{
         for(String key: keys){
             System.out.println(key);
         }
+    }
+
+    public Map<String,Boolean> getAceite()
+    {
+        return this.encAceites;
     }
 
     public boolean userExists(String uEmail){
@@ -141,8 +145,29 @@ public class StateManager implements Serializable{
         return (strType(type) + String.valueOf(aux));
     }
 
-    public void addEcoAceite(String str)
+    public String generateRef()
     {
-        this.encAceites.add(str);
+        int aux = 0;
+        for(Map.Entry<String,Boolean> entry : this.encAceites.entrySet())
+        {
+            String ref = entry.getKey();
+            int value = Integer.parseInt(ref.substring(1,ref.length()));
+            if(value > aux);
+                aux = value;
+        }
+        aux++;
+
+        return "e" + String.valueOf(aux);
+    }
+
+    public void addEcoAceite(String str,Boolean bool)
+    {
+        this.encAceites.put(str,bool);
+    }
+
+    public void printEnco()
+    {
+        for(Map.Entry<String,Boolean> entry : this.encAceites.entrySet())
+            System.out.println(entry.getKey() + entry.getValue());
     }
 }

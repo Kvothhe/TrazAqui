@@ -1,4 +1,6 @@
-public class LinhaEncomenda
+import java.io.Serializable;
+
+public class LinhaEncomenda implements Serializable
 {
     private String CodProduto;
     private String Descricao;

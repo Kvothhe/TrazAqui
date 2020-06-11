@@ -17,39 +17,34 @@ public class TrazAqui
     private Account curUser;
     private Menu appMenu;
     private static int count=0;
-    
-    public static void main(String[] args){
-        TrazAqui mApp = null;
-        boolean recover=false, success=false;
-        
-        try
-        {
-            mApp = new TrazAqui();
-            Scanner input = new Scanner(System.in);
-            //Isto não é intuitivo 
-            System.out.print("Recuperar um estado antigo?");
-            recover = input.nextBoolean();
-        }
-        catch(Exception e)
-        {
-            System.out.println(e.getMessage());
-        }
-        
-        if(recover)
+
+
+    public static void main(String[] args) throws Exception
+    {
+        TrazAqui app = new TrazAqui();
+        int recuperar = 0;
+
+        Scanner input = new Scanner(System.in);
+        System.out.print("Recuperar um estado antigo?\n1-Sim\n2-Não\n");
+        recuperar = input.nextInt();
+
+        if(recuperar == 1)
         {
             try
             {
-                ObjectInputStream ois = new ObjectInputStream(new FileInputStream("Estado"));
-                mApp.curState = (StateManager)ois.readObject();
+                ObjectInputStream ois = new ObjectInputStream(new FileInputStream("Estado.dat"));
+                app.curState = (StateManager)ois.readObject();
                 ois.close();
             }
             catch(Exception e)
             {
                 System.out.println("Não está carregado! (" + e.getMessage() + ")");
             }   
-        } 
-        mApp.run(false);
+        }
+
+        app.run(false);
     }
+
     
     public void run(boolean loggedIn)
     {    
@@ -60,10 +55,10 @@ public class TrazAqui
             
             else if(this.curUser instanceof Utilizador){
                 loggedIn = this.userActions();
-            }/*
-            else if(this.curUser instanceOf Loja){
-                this.
-            }*/
+            }
+            else if(this.curUser instanceof Loja){
+                loggedIn = this.lojaActions();
+            }
               
         }while(this.appMenu.getOpt() != 0);
     }
@@ -96,7 +91,34 @@ public class TrazAqui
         return login;
     }
     
-    public void addEncUti(){
+    public boolean lojaActions()
+    {
+        boolean login = true;
+
+        this.appMenu.lojMenu();
+        switch(this.appMenu.getOpt()){
+                case 1:
+                    break;
+                case 2:
+                    Loja aux = (Loja)this.curUser;
+                    aux.aceiEncomenda(this.curState.getAceite());
+                    break;
+                case 3:
+                    login = false;
+                    System.out.println("Logging out");
+                    this.curState.updateUser(this.curUser);
+                    break;
+                case 0:
+                    System.out.println("A sair...");
+                    save();
+                    login = false;
+                    break;
+        }
+        return login;
+    }
+
+    public void addEncUti()
+    {
         Utilizador aux = (Utilizador)this.curUser;
         Location l = aux.getLoc();
         Loja loj = new Loja();
@@ -113,39 +135,58 @@ public class TrazAqui
         double qt = 0;
         double valor = 0;
         
-        System.out.println("Insira o código da loja");
-        lj = in.nextLine();
-        loj = (Loja) this.curState.getUser(lj+"@email.pt");
-        Location lojaloc = loj.getLoc();
-        System.out.println(lojaloc);
-        e.setFornecedor(lj);
-        System.out.println("Insira a descrição do produto: ");
-        pr = in.nextLine();
-        le.setDescricao(pr);
-        System.out.println("Insira o código do produto: ");
-        cd = in.nextLine();
-        le.setCodproduto(cd);
-        System.out.println("Insira a quantidade: ");
-        qt = in.nextDouble();
-        le.setQuantidade(qt);
-        System.out.println("Insira o valor: ");
-        valor = in.nextDouble();
-        le.setValorunitario(valor);
-        
-        e.setCliente(aux.getCodigo());
-        aux.addEncomenda(e);
-        volu = aux.retornacloseVol(l,lojaloc,this.curState.getUserList());
-        System.out.println(volu.getNome());
-        //empv = aux.retornacloseEmp(l,lojaloc,this.curState.getUserList());
-        /*
-        if(volu != null){
-        	volu.addEncomenda(e);
-        	System.out.println(volu.getNome());
+        try
+        {
+            System.out.println("Insira o código da loja");
+            lj = in.nextLine();
+            loj = (Loja) this.curState.getUser(lj+"@email.pt");
+            Location lojaloc = loj.getLoc();
+            System.out.println(lojaloc);
+            e.setFornecedor(lj);
+            System.out.println("Insira a descrição do produto: ");
+            pr = in.nextLine();
+            le.setDescricao(pr);
+            System.out.println("Insira o código do produto: ");
+            cd = in.nextLine();
+            le.setCodproduto(cd);
+            System.out.println("Insira a quantidade: ");
+            qt = in.nextDouble();
+            le.setQuantidade(qt);
+            System.out.println("Insira o valor: ");
+            valor = in.nextDouble();
+            le.setValorunitario(valor);
+            
+            e.setCliente(aux.getCodigo());
+            e.addProduto(le);
+            e.setReferencia(this.curState.generateRef());
+            volu = aux.retornacloseVol(l,lojaloc,this.curState.getUserList());
+            empv = aux.retornacloseEmp(l,lojaloc,this.curState.getUserList());
+
+            if(volu != null)
+            {
+            	this.curState.getUser(volu.getEmail()).addEncomenda(e);
+            	this.curState.getUser(lj+"@email.pt").addEncomenda(e);
+                this.curState.addEcoAceite(e.getReferencia(),false);
+                System.out.println("Voluntário disponivel: " + volu.getNome());
+                aux.addEncomenda(e);
+            }
+            else if(empv != null)
+            {
+            	//volu.addEncomenda(e);
+                this.curState.getUser(empv.getEmail()).addEncomenda(e);
+                this.curState.getUser(lj+"@email.pt").addEncomenda(e);
+                this.curState.addEcoAceite(e.getReferencia(),false);
+            	System.out.println(empv.getNome());
+                aux.addEncomenda(e);        	
+            }
+            else
+                System.out.println("Nenhum transporte disponível");
+
         }
-        else{
-        	empv.addEncomenda(e);
-        	System.out.println(volu.getNome());        	
-        }*/
+        catch(Exception ex)
+        {
+            System.out.println(ex);
+        }   
     }
     
     public void classSer(){
@@ -161,14 +202,23 @@ public class TrazAqui
         cla = in.nextInt();
         
         Account a = this.curState.getUser(ser);
-        if(a instanceof EmpresaV){
-            EmpresaV b = (EmpresaV) this.curState.getUser(ser);
-            b.addClassificacao(cla);
+        try
+        {
+            if(a instanceof EmpresaV)
+            {
+                EmpresaV b = (EmpresaV) this.curState.getUser(ser);
+                b.addClassificacao(cla);
+            }
+            else if(a instanceof Voluntario)
+            {
+                Voluntario v = (Voluntario) this.curState.getUser(ser);
+                v.addClassificacao(cla);
+                System.out.println(v.getClassificacao());
+            }
         }
-        else{
-            Voluntario v = (Voluntario) this.curState.getUser(ser);
-            v.addClassificacao(cla);
-            System.out.println(v.getClassificacao());
+        catch(Exception e)
+        {
+            System.out.println("Serviço inexistente");
         }
             
     }
@@ -177,14 +227,18 @@ public class TrazAqui
         return this.curUser.getRegisto();
     }
     
-    public void save(){
-       try{
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("Estado"));
+    public void save()
+    {       
+        try
+        {
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("Estado.dat"));
             oos.writeObject(this.curState);
             oos.flush();
             oos.close();
-        }catch(Exception e){
-            System.out.println(e.getMessage());
+        }
+        catch(Exception e)
+        {
+            System.out.println("Erro " + e.getMessage());
         }
     }
     
@@ -192,7 +246,7 @@ public class TrazAqui
         if(count == 0){
             String[] mOps = {"Login", "Registar", "Top 10 utilizadores", "Top 10 empresas", "Read Logs", "Testes"};
             String[] uOps = {"Inserir Pedido", "Classificar Serviço","Registo compras","Logout"};
-            String[] lOps = {"Inserir informação","Logout"};
+            String[] lOps = {"Inserir informação","Aceitar Encomenda","Logout"};
             String[] eOps = {"Total faturado","Logout"};
             this.curState = new StateManager();
             this.curUser = null;
@@ -311,10 +365,10 @@ public class TrazAqui
         if(this.curState.userExists(email)){
             ret = this.curState.getUser(email);
             enter = ret.getPassword().equals(password);
-        }else throw new UserNotFoundException("No user found with "+ email);
+        }else throw new UserNotFoundException("User não encontrado "+ email);
 
         if(enter) return ret;
-        else throw new WrongPasswordException("Incorrect password for "+email); //paswords didn't match
+        else throw new WrongPasswordException("Password incorreta "+email);
     }
 
     public Account register () throws DuplicateRegistrationException{
@@ -394,9 +448,17 @@ public class TrazAqui
 
     public void testes()
     {
-        for(Map.Entry<String,Account> entry : this.curState.getUsers().entrySet())
-            System.out.println(entry.getValue().toString() + "\n----\n");// + a.getEncomenda());
+        this.curState.printEnco();
+
+     //   for(Map.Entry<String,Account> entry : this.curState.getUsers().entrySet())
+       //     System.out.println("-----\n"+entry.getValue().toString() + "\n-----\n");// + a.getEncomenda());
             //System.out.println("Cod: " + entry.getValue().getCod() + "Size:" + entry.getValue().qtsClientes() + "\n----\n");// + a.getEncomenda());
         
     }
+
+    public static void clearScreen() 
+    {  
+        System.out.print("\033[H\033[2J");  
+        System.out.flush();  
+    }  
 }
