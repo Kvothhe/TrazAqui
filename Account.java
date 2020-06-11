@@ -70,6 +70,11 @@ public class Account implements Comparable<Account>,Serializable{
                            .collect(Collectors.toList());
     }
 
+    public List<Encomenda> getEcs()
+    {
+        return this.registo;
+    }
+
     public void setEmail (String e){
         this.email = e;
     }

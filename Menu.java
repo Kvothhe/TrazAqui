@@ -73,7 +73,7 @@ public class Menu
     //Não faz sentifo chamar Menu serviço mas sim Menu Transportadora
     public void servMenu(){
         do{
-            System.out.println("*** Menu de Servico ***");
+            System.out.println("*** Menu de Transportadora ***");
             showServoptions();
             readOption(this.servicoChoices.size());
         }while(this.opt == -1);

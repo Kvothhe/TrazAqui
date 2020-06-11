@@ -7,6 +7,8 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.Scanner;
+import java.time.LocalDate;
+
 
 public class Loja extends Account
 {
@@ -110,7 +112,10 @@ public class Loja extends Account
         for(Encomenda enco : lista)
         {
             if(aceites.get(enco.getReferencia()).equals(false))
+            {
+                enco.setDatabusca(LocalDate.now());
                 paraAceitar.add(enco);
+            }
         }
 
         System.out.println("Escolha a encomenda a aceitar:");

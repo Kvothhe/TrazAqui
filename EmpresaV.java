@@ -1,6 +1,8 @@
 import java.util.List;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
+import java.util.Scanner;
+import java.time.LocalDate;
 
 public class EmpresaV extends Account
 {
@@ -16,6 +18,7 @@ public class EmpresaV extends Account
     private List<Encomenda> enc;
     private String nif;
     private static double taxakm;
+    private double totalfat;
     
     public EmpresaV(){
         super();
@@ -30,6 +33,7 @@ public class EmpresaV extends Account
         this.enc = new ArrayList<>();
         this.nif = "";
         this.taxakm = 0;
+        this.totalfat = 0;
     }
     
     public EmpresaV(List<Encomenda> list, String email, String password, String cod,String n,Location l,double r,
@@ -86,6 +90,15 @@ public class EmpresaV extends Account
     public double getTaxakm(){
         return this.taxakm;
     }
+
+    public double getTotalFat(){
+        return this.totalfat;
+    }
+
+    public void setTotalFat(double s)
+    {
+        this.totalfat = s;
+    }
     
     public boolean equals(Object o){
         if(this == o) return true;
@@ -114,6 +127,54 @@ public class EmpresaV extends Account
     public int getUtilizador(){
         return this.uti;
     }
+
+    public void changeDisp()
+    {
+        this.setDisponibilidade(!this.getDisponibilidade());
+    }
+    
+    public void showDisp()
+    {
+        if(this.getDisponibilidade() == true)
+            System.out.println("Disponível");
+        else
+            System.out.println("Não disponível");
+    }
+
+    public double custo(Encomenda enc, StateManager state)
+    {
+        Account emp = state.getTransRef(enc.getReferencia());
+
+        return enc.getPeso()*0.2 + ((Utilizador)state.getUserByCode(enc.getCliente())).getLoc().distanceTo(((EmpresaV)emp).getLoc()) * 0.001 * ((EmpresaV)emp).getTaxakm();
+    }
+
+    public void transportar(StateManager state)
+    {
+        Scanner input = new Scanner(System.in);
+        List<Encomenda> lis = this.getEcs();
+
+        if(lis.size() != 0)
+            System.out.println("Encomendas a transportar:");
+        else
+            System.out.println("Sem Encomendas");
+        for(int i = 0; i < lis.size(); i++)
+        {
+            if(lis.get(i).getDatabusca() != null && lis.get(i).getDataentrega() == null)
+                System.out.println((i+1) + "-Ref: " + lis.get(i).getReferencia());
+        }
+
+        if(lis.size() != 0)
+        {
+            System.out.print("Transportar nº: ");
+            int opt = input.nextInt();
+
+            if(lis.size() >= opt && lis.get(opt-1).getDatabusca() != null && lis.get(opt-1).getDataentrega() == null)
+            {
+                lis.get(opt-1).setDataentrega(LocalDate.now());
+                setTotalFat(getTotalFat() + custo(lis.get(opt-1),state) );
+            }
+        }
+    }   
     
     public void setUtilizador(int u){
         this.uti = u;

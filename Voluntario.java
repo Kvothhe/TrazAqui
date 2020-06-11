@@ -1,5 +1,7 @@
 import java.util.List;
 import java.time.LocalTime;
+import java.time.LocalDate;
+import java.util.Scanner;
 
 public class Voluntario extends Account
 {
@@ -140,5 +142,26 @@ public void setVelocidademed(double l){
     }
     
     public Voluntario clone() {return new Voluntario(this);}
-    
+
+    public void transEnc()
+    {
+        Scanner input = new Scanner(System.in);
+        List<Encomenda> lis = this.getEcs();
+
+        System.out.println("Encomendas a transportar:");
+        for(int i = 0; i < lis.size(); i++)
+        {
+            if(lis.get(i).getDatabusca() == null)
+                System.out.println((i+1) + "-Ref: " + lis.get(i).getReferencia());
+        }
+
+        System.out.print("transportar nº: ");
+        int opt = input.nextInt();
+
+        if(lis.get(opt-1).getDatabusca() == null)
+        {
+            lis.get(opt-1).setDatabusca(LocalDate.now());
+            lis.get(opt-1).setDataentrega(LocalDate.now());
+        }
+    }    
 }

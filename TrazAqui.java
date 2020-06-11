@@ -59,6 +59,9 @@ public class TrazAqui
             else if(this.curUser instanceof Voluntario){
                 loggedIn = this.volActions();
             }
+            else if(this.curUser instanceof EmpresaV){
+                loggedIn = this.servActions();
+            }
             else if(this.curUser instanceof Loja){
                 loggedIn = this.lojaActions();
             }
@@ -109,6 +112,7 @@ public class TrazAqui
                     ((Voluntario)this.curUser).showDisp();
                     break;
                 case 3:
+                    ((Voluntario)this.curUser).transEnc();
                     break;
                 case 4:
                     login = false;
@@ -137,6 +141,39 @@ public class TrazAqui
                     aux.aceiEncomenda(this.curState.getAceite());
                     break;
                 case 3:
+                    login = false;
+                    System.out.println("Logging out");
+                    this.curState.updateUser(this.curUser);
+                    break;
+                case 0:
+                    System.out.println("A sair...");
+                    save();
+                    login = false;
+                    break;
+        }
+        return login;
+    }
+
+    public boolean servActions()
+    {
+        boolean login = true;
+
+        this.appMenu.servMenu();
+        switch(this.appMenu.getOpt()){
+                case 1:
+                    //totalfaturado
+                    System.out.println("Total Faturado: " + ((EmpresaV)this.curUser).getTotalFat());
+                    break;
+                case 2:
+                    ((EmpresaV)this.curUser).showDisp();
+                    break;
+                case 3:
+                    ((EmpresaV)this.curUser).changeDisp();
+                    break;
+                case 4:
+                    ((EmpresaV)this.curUser).transportar(this.curState);
+                    break;
+                case 5:
                     login = false;
                     System.out.println("Logging out");
                     this.curState.updateUser(this.curUser);
@@ -281,7 +318,7 @@ public class TrazAqui
             String[] uOps = {"Inserir Pedido", "Aceitar Transporte" ,"Classificar Serviço","Registo compras","Logout"};
             String[] lOps = {"Inserir informação","Aceitar Encomenda","Logout"};
             String[] vOps = {"Mudar Disponibilidade","Mostrar Disponibilidade","Transportar Encomenda","Logout"};
-            String[] eOps = {"Total faturado","Logout"};
+            String[] eOps = {"Total faturado","Mostrar Disponibilidade","Mudar Disponibilidade","Transportar","Logout"};
             this.curState = new StateManager();
             this.curUser = null;
             this.appMenu = new Menu(uOps,lOps,vOps,eOps,mOps);

@@ -2,6 +2,8 @@ import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
+import java.time.LocalDate;
+import java.util.Scanner;
 
 public class Utilizador extends Account 
 {
@@ -99,9 +101,29 @@ public class Utilizador extends Account
 
         return closer;
     }
+
+    public double custo(Encomenda enc, StateManager state)
+    {
+        Account emp = state.getTransRef(enc.getReferencia());
+
+        return enc.getPeso()*0.2 + this.getLoc().distanceTo(((EmpresaV)emp).getLoc()) * 0.001 * ((EmpresaV)emp).getTaxakm();
+    }
     
     public void aceiTrans(StateManager state)
     {
-        //this.
+        Scanner input = new Scanner(System.in);
+        List<Encomenda> enco = this.getEcs();
+        System.out.println("Escolha encomenda a aceitar para transporte:");
+        for(int i = 0; i < enco.size(); i++)
+        {
+            if(enco.get(i).getDatabusca() == null)
+                System.out.println("Encomenda nº"+(i+1)+": " + enco.get(i).getReferencia() +" Transportadora: " 
+                + state.getTransRef(enco.get(i).getReferencia()).getNome() + " Custo: " + custo(enco.get(i), state) );
+        }
+        System.out.print("Encomenda nº: ");
+        int opt = input.nextInt();
+
+        if(enco.get(opt-1).getDatabusca() == null)
+            enco.get(opt-1).setDatabusca(LocalDate.now());
     }
 }

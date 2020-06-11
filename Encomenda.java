@@ -25,8 +25,8 @@ public class Encomenda implements Serializable
         this.med = false;
         this.preco = 0;
         this.produtos = new ArrayList<LinhaEncomenda>();
-        this.dataentrega = LocalDate.now();
-        this.databusca = LocalDate.now();
+        this.dataentrega = null;//LocalDate.now();
+        this.databusca = null;//LocalDate.now();
     }
     
     public Encomenda(String r,String f,String c,double p,
@@ -48,6 +48,7 @@ public class Encomenda implements Serializable
         this.peso = e.getPeso();
         this.produtos = e.getProdutos();
         this.dataentrega = e.getDataentrega();
+        this.databusca = e.getDatabusca();
     }
     
     public boolean equals(Object obj){

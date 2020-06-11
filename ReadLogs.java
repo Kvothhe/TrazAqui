@@ -92,8 +92,7 @@ public class ReadLogs
        
                 if(parts[0].charAt(0) == 'A')
                 {
-                  	state.addEcoAceite(parts[0].substring(7,parts[0].length()),true);
-                	
+                  	state.addEcoAceite(parts[0].substring(7,parts[0].length()),true);	
                 }
 
             }

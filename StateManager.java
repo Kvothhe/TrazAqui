@@ -5,8 +5,10 @@ import java.util.Set;
 import java.util.Map;
 import java.util.Iterator;
 import java.util.stream.Stream;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.io.Serializable;
+import java.time.LocalDate;
 
 public class StateManager implements Serializable{
     private Map<String,Account> users;
@@ -162,8 +164,60 @@ public class StateManager implements Serializable{
 
     public void addEcoAceite(String str,Boolean bool)
     {
+        /*for(Map.Entry<String,Account> entry : this.users.entrySet())
+            for(Encomenda eco : entry.getValue().getEncomenda())
+                if(eco.getReferencia().equals(str))
+                    eco.setDatabusca(LocalDate.now());
+        */
         this.encAceites.put(str,bool);
     }
+
+    public Account getTransRef(String ref)
+    {
+        Account conta = null;
+
+        boolean b = false;
+        for(Map.Entry<String,Account> entry : this.users.entrySet())
+        {
+            conta = entry.getValue();
+         
+            if(conta instanceof EmpresaV)
+            {
+                for(Encomenda enco : conta.getEncomenda())
+                    if(enco.getReferencia().equals(ref))
+                    {
+                        b = true;
+                        break;
+                    }
+            }
+            if(b)
+                break;
+        }
+
+        return conta;
+    }
+
+    /*public void getUsersEcoByRef(String ref)
+    {
+        List<Encomenda> arr = new ArrayList<>();
+
+        for(Map.Entry<String,Account> entry : this.users.entrySet())
+            for(Encomenda eco : entry.getValue().getEncomenda())
+                if(eco.getReferencia().equals(ref))
+                    arr.add(eco);
+
+        for(Encomenda eco : arr)
+            eco.setDatabusca(LocalDate.now());
+    }
+
+    public void permitirTransporte()
+    {
+        for(Map.Entry<String,Boolean> entry : this.encAceites.entrySet())
+        {
+            if(entry.getValue())
+                getUsersEcoByRef(entry.getKey());
+        }
+    }*/
 
     public void printEnco()
     {
